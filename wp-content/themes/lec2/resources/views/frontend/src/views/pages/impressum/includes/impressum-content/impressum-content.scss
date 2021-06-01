@@ -1,0 +1,59 @@
+@import "~@/scss/base";
+
+.impressum-content {
+  .container {
+    max-width: 926px;
+  }
+
+  dl {
+    display: flex;
+    line-height: 30px;
+    margin-bottom: 27px;
+    dd,
+    dt {
+      white-space: pre-line;
+      width: 50%
+    }
+    dt {
+      padding-right: 10px;
+    }
+    dd {
+      padding-left: 10px;
+    }
+  }
+}
+
+@include tablet-up {
+  .impressum-content {
+    font-size: 1.8rem;
+    line-height: 30px;
+  }
+}
+
+@include mobile {
+  .impressum-content {
+    margin-top: 20px;
+    margin-bottom: 35px;
+
+    dl {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      line-height: 19.07px;
+      dd {
+        padding-left: 0;
+      }
+      dt {
+        margin-bottom: 6px;
+        padding-right: 8px;
+        min-width: 136px;
+      }
+      dt,
+      dd {
+        width: auto;
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+  }
+}

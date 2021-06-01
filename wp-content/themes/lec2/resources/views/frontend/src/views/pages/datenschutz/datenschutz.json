@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "state": "guest"
+  },
+  "page_data": {
+    "custom_data": {
+      "top_banner": {
+        "top_banner_background": "~@/assets/images/datenschutz-banner.png",
+        "top_banner_title": "Datenschutz",
+        "top_banner_description": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+      }
+    },
+    "post_content": "<dl><dt><strong>1. Begriffsbestimmungen</strong></dt><dd><p>Die Datenschutzerklärung der PLC2 Unternehmensgruppe beruht auf den Begrifflichkeiten, die durch den Europäischen Richtlinien- und Verordnungsgeber beim Erlass der Datenschutz-Grundverordnung (DS-GVO) verwendet wurden. Unsere Datenschutzerklärung soll sowohl für die Öffentlichkeit als auch für unsere Kunden und Geschäftspartner einfach lesbar und verständlich sein. Um dies zu gewährleisten, möchten wir vorab die verwendeten Begrifflichkeiten erläutern.</p><p>Wir verwenden in dieser Datenschutzerklärung unter anderem die folgenden Begriffe:</p></dd></dl><dl><dt><strong>a)&nbsp;&nbsp;&nbsp;&nbsp;personenbezogene Daten</strong></dt><dd>Personenbezogene Daten sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden „betroffene Person“) beziehen. Als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung oder zu einem oder mehreren besonderen Merkmalen, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind, identifiziert werden kann.</dd></dl><dl><dt><strong>b)&nbsp;&nbsp;&nbsp;&nbsp;betroffene Person</strong></dt><dd>Betroffene Person ist jede identifizierte oder identifizierbare natürliche Person, deren personenbezogene Daten von dem für die Verarbeitung Verantwortlichen verarbeitet werden.</dd></dl>"
+  }
+}

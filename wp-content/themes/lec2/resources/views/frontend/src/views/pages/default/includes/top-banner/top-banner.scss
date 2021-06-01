@@ -1,0 +1,32 @@
+@import "~@/scss/base";
+
+.top-banner-default {
+  margin-bottom: 0;
+  padding-bottom: 12.43vw;
+  margin-bottom: 0;
+  text-align: center;
+
+  .top-banner-content {
+    padding-top: 0;
+  }
+
+  h1 {
+    font-size: 3.6rem;
+    color: $color-primary;
+  }
+}
+
+@include tablet-down() {
+  .top-banner-default {
+    padding-bottom: 15.625vw;
+  }
+}
+
+@include mobile {
+  .top-banner.top-banner-contact {
+    margin-bottom: 40px;
+    h1 {
+      font-size: 2.4rem;
+    }
+  }
+}

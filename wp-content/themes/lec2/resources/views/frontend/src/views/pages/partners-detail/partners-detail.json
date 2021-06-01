@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "state": "guest"
+  },
+  "page_data": {
+
+    "custom_data": {
+      "partners_short_description": "<p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. </p> <p>Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.</p> <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. </p>",
+      "banner_blocks": [
+        {
+          "content": "<p>Since 1989 TRIAS mikroelektronik GmbH has been offering Electronic Design Automation (EDA) software product solutions in the fields of FPGA Design and IC Design, as well as for the design of wiring harness systems and on board networks. </p><p>Complementing these EDA (Electronic Design Automation) topics, our Application Lifecycle Management (ALM) and Product Lifecycle Management (PLM) solutions provide end-to-end monitoring and support of software applications and products throughout the complete mechatronic product development process.</p>",
+          "image": "~@/assets/images/partners-detail/partner-detail02.png",
+          "is_show": true
+        }
+      ]
+    },
+    "thumbnail": "~@/assets/images/partners-detail/logo02.png",
+    "post_type": "Partner"
+  }
+}

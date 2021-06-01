@@ -1,0 +1,46 @@
+{% import "@views/macros/forms/forms.twig" as forms %}
+
+<div id="{{id}}" class="filter-schedule-form js-filter-schedule-form filter-header">
+	<form>
+		<div class="form-group-filter">
+			<div class="form-group form-group--type">
+				{{ forms.select({name: 'type_id', id:'type_select', classes: 'selectpicker', options: type, search: false} ) }}
+			</div>
+			<div class="form-group form-group--type location">
+				{{ forms.select({name:'location_id', id:'location', classes: 'selectpicker', options: location, search: false} ) }}
+			</div>
+			<div class="form-group form-group--type date-picker">
+				{{ forms.input({id: 'fromDatepicker', name: 'from', value:'', placeholder: fromLabel|raw, type: 'text', autocomplete: false, required: true})}}
+			</div>
+			<div class="form-group form-group--type date-picker">
+				{{ forms.input({id: 'toDatepicker', name: 'to', value:'', placeholder: toLabel|raw, type: 'text', autocomplete: false, required: true})}}
+			</div>
+			<div class="form-group form-group--type keyword">
+				{{ forms.input({id: 'keyword', name: 'keyword', value:'', placeholder: keywordLabel|raw, type: 'text', autocomplete: false, required: true})}}
+			</div>
+		</div>
+		<div class="form-group  form-group--action">
+			<button type="submit" class="btn btn-info">{{buttonFilterText|raw}}</button>
+		</div>
+	</form>
+	<div class="filter-header__content">
+		<div class="course-item-listing">
+			<div class="course-item" rv-each-item="courseList.items">
+				<h5 rv-text="item.post_title"></h5>
+				<div class="course-item-content">
+					<div class="course-item-left">
+						<p class="course-item-time" rv-text="item.time"></p>
+						<p class="course-item-type" rv-text="item.type"></p>
+						<a class="course-item-infor-link" rv-href="item.infor_url">{{global.theme_options.text_translation.default_global_settings_text.more_information}}
+							<i class="icon-chevron-right-solid"></i>
+						</a>
+					</div>
+					<div class="course-item-link">
+						<a class="btn btn-primary" rv-href="item.buy_url">{{ global.theme_options.text_translation.default_global_settings_buttons.buy }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="pagination-schedule"  class="pagination-header"></div>
+	</div>
+</div>

@@ -1,0 +1,45 @@
+@import "~@/scss/base";
+
+
+.datenschutz-page {
+  .top-banner {
+    &--datenschutz {
+      padding-bottom: 8vw;
+    }
+    &-content {
+      color: $color-primary;
+    }
+  }
+}
+
+@include desktop() {
+  .datenschutz-page {
+    .top-banner--datenschutz {
+      .top-banner-image {
+        text-align: center;
+        img {
+          max-width: 395px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile() {
+  .datenschutz-page {
+    .top-banner {
+      &--datenschutz {
+        padding-bottom: 10vw;
+      }
+      p {
+        margin-bottom: 10px;
+      }
+      &-image {
+        margin-left: -21px;
+        img {
+          max-width: 261px;
+        }
+      }
+    }
+  }
+}

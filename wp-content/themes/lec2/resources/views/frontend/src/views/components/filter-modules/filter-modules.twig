@@ -1,0 +1,17 @@
+{% import "@views/macros/forms/forms.twig" as forms %}
+
+<div id="{{id}}" class="filter-modules-form js-filter-modules-form filter-header">
+  <form method="get" action="{{action}}">
+    <div class="form-group form-group--type">
+      <label for="training_type"> {{typeLabel}} </label>
+      {{ forms.select({name:'training_type', id:'training_type', classes: 'selectpicker', options: trainingType} ) }}
+    </div>
+    <div class="form-group form-group--type">
+      <label for="training_format"> {{formatLabel}} </label>
+      {{ forms.select({name:'training_format', id:'training_format', classes: 'selectpicker', options: trainingFormat} ) }}
+    </div>
+    <div class="form-group  form-group--action">
+      <button type="submit" class="btn btn-info">{{buttonText|raw}}</button>
+    </div>
+  </form>
+</div>

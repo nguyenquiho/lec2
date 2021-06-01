@@ -1,0 +1,26 @@
+{% extends "@views/layouts/layout-default.twig" %}
+
+{# block declare #}
+
+{%
+  set viewData = {
+    bodyClass: 'datenschutz-page',
+    jsController: 'datenschutz',
+    headerTheme: 'gray',
+    footerType: 'primary'
+  }
+%}
+
+{% block pageContent %}
+  {% include "@views/components/top-banner/top-banner.twig" with {
+    'topBannerData': page_data.custom_data.top_banner,
+    classPage: 'datenschutz',
+    theme: 'gray'
+  }%}
+
+  {% include "@views/pages/datenschutz/includes/datenschutz-content/datenschutz-content.twig" %}
+
+  {% include "@views/components/get-opportunities/get-opportunities.twig" with {
+    btnTheme: 'primary',
+  }%}
+{% endblock %}

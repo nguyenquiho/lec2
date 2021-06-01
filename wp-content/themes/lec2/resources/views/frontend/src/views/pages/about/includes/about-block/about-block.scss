@@ -1,0 +1,143 @@
+@import "~@/scss/base";
+
+.about-block {
+  position: relative;
+  z-index: 2;
+  margin-top: -9.1vw;
+  padding-bottom: 20px;
+  &:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    bottom: 18%;
+    height: 80%;
+    width: 100%;
+    background: url("~@/assets/images/bg-gray-bottom-radius-mb.png") center
+    bottom no-repeat transparent;
+    background-size: contain;
+  }
+  .about-item {
+    position: relative;
+    z-index: 5;
+    margin-bottom: 48px;
+    color: $color-dark;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-image {
+      margin-bottom: 24px;
+      img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+    }
+    &-text {
+      @extend %lead;
+      *:last-child {
+        margin-bottom: 0;
+      }
+      h4 {
+        margin-top: 12px;
+        margin-bottom: 8px;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+    &-title {
+      margin-bottom: 12px;
+    }
+  }
+  + section {
+    position: relative;
+    z-index: 3;
+    margin-top: -236px;
+  }
+}
+
+@include desktop() {
+  .about-block {
+    margin-top: 2.2vw;
+    padding-bottom: 57px;
+
+    &:after {
+      bottom: 21.5%;
+      background: url("~@/assets/images/bg-gray-bottom-radius.png") center
+      bottom no-repeat;
+      background-size: cover;;
+    }
+    .about-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0 -12px 116px;
+      padding: 0;
+      &:nth-child(2n) {
+        flex-direction: row-reverse;
+        .about-item-image {
+          flex-basis: 51.5%;
+          width: 51.5%;
+        }
+        .about-item-content {
+          flex-basis: 48.5%;
+          width: 48.5%;
+        }
+      }
+      &-image,
+      &-content {
+        padding: 0 12px;
+      }
+      &-image {
+        margin-bottom: 0;
+        flex-basis: 38.5%;
+        width: 38.5%;
+      }
+      &-content {
+        flex-basis: 61.5%;
+        width: 61.5%;
+      }
+      &-title {
+        margin-bottom: 42px;
+      }
+      &-text {
+        h4 {
+          margin-top: 32px;
+        }
+        p {
+          margin-bottom: 24px;
+        }
+      }
+    }
+    + section {
+      margin-top: -247px;
+    }
+  }
+}
+
+@include tablet-down {
+  .about-block {
+    padding-top: 100px;
+    .about-item-image img {
+      max-height: 350px;
+    }
+  }
+
+}
+
+@include breakpoint($min: $breakpoint-xl) {
+  .about-block {
+    padding-top: 0;
+    .about-item {
+      margin-left: -20px;
+      margin-right: -20px;
+      &-image,
+      &-content {
+        padding: 0 20px;
+      }
+    }
+  }
+}

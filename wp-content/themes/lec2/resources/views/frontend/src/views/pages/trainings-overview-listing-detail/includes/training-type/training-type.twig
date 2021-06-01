@@ -1,0 +1,163 @@
+{% import "@views/macros/forms/forms.twig" as forms %}
+{%
+  set options = {
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+		autoplay: false,
+		infinite: false,
+		responsive: [
+			{
+        breakpoint: 1199,
+        settings: {
+					slidesToShow: 4
+        }
+      },
+			{
+        breakpoint: 1025,
+        settings: {
+					arrows: true,
+					slidesToShow: 3,
+          variableWidth: false,
+          centerMode: false,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+					arrows: true,
+					slidesToShow: 2,
+          variableWidth: false,
+          centerMode: false,
+        }
+      }
+    ]
+  }
+%}
+<div class="training-type-block">
+<div class="container">
+  <h2 class="training-type-block-title">{{ global.theme_options.text_translation.default_global_settings_text.choose_type }}</h2>
+  <div class="training-type-list" data-slick='{{ options|json_encode }}'>
+    {% for trainingItem in data %}
+      <div class="training-type-column">
+        <div class="training-type" data-index="training-type-{{loop.index}}" data-target="#training-type-{{loop.index}}">
+          <h3 class="training-type-title">{{ trainingItem.post_title }}</h3>
+          <img src="{{ trainingItem.thumbnail }}" alt="{{ trainingItem.post_title }}"/>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="training-body">
+	<div class="container">
+		{% for trainingItem in data %}
+			<div class="training-container" id="training-type-{{loop.index}}">
+				<dl class="training-body-row training-body-row--oneline">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.type_training }}:
+					</dt>
+					<dd class="training-body-content right">{{trainingItem.post_title|raw}}</dd>
+				</dl>
+				{% if trainingItem.execution_of_training and trainingItem.execution_of_training|length > 1 %}
+        <dl class="training-body-row training-body-row--oneline">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.execution_of_training }}:
+					</dt>
+					<dd class="training-body-content right">{{ forms.select({name:'executionOfTraining',classes: 'selectpicker selectprimary', options: trainingItem.execution_of_training} ) }}</dd>
+				</dl>
+				{% endif %}
+				<dl class="training-body-row training-body-row--cost">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.cost }}:
+					</dt>
+					<dd class="training-body-content right">{{trainingItem.cost|raw}}</dd>
+				</dl>
+
+				{% set defaultHiddenClass = ' hidden' %}
+				{% if trainingItem.execution_of_training|length > 0 and trainingItem.execution_of_training[0].value == 'live_video' %}
+					{% set defaultHiddenClass = '' %}
+				{% endif %}
+
+				{% if trainingItem.format %}
+        <dl class="training-body-row training-body-row--format{{defaultHiddenClass}}">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.format }}:
+					</dt>
+					<dd class="training-body-content right">{{trainingItem.format}}</dd>
+				</dl>
+				{% endif %}
+        <dl class="training-body-row training-body-row--date{{defaultHiddenClass}}">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.date }}:
+					</dt>
+					<dd class="training-body-content right">{{ forms.select({name:'date', classes: 'selectpicker selectprimary', options: trainingItem.time} ) }}</dd>
+				</dl>
+				<dl class="training-body-row">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.participant_documents_provided }}:
+					</dt>
+					<dd class="training-body-content right">{{trainingItem.participant_documents_provided|raw}}</dd>
+				</dl>
+				<dl class="training-body-row">
+					<dt class="training-body-content left">
+						{{ global.theme_options.text_translation.default_global_settings_text.course_objectives }}:
+					</dt>
+					<dd class="training-body-content training-body-content--richtext right">{{trainingItem.course_objectives|raw}}</dd>
+				</dl>
+				<div class="buy-link text-center">
+					{% if trainingItem.post_title == 'Inhouse' %}
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#requestForm">
+							{{global.theme_options.form_contact_top.request_text}}
+						</button>
+					{% else %}
+					<form method="post" action="{{page_data.custom_data.checkout_url}}">
+						<div>
+							<input type="hidden" name="training_id" id="training_id" value="{{page_data.ID}}"/>
+							<input type="hidden" name="training_type_id" id="training_type_id" value="{{trainingItem.ID}}"/>
+							<input type="submit" name="buyTraining" class="btn btn-info" value="{{global.theme_options.text_translation.default_global_settings_buttons.buy_training}}"/>
+						</div>
+					</form>
+					{% endif %}
+					{% if trainingItem.pdf_file %}
+						<a href="{{trainingItem.pdf_file}}" download class="btn btn-outline-info">
+							{{global.theme_options.text_translation.default_global_settings_buttons.download_pdf}}
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="agenda-block">
+	{% for trainingItem in data %}
+		{% if trainingItem.agenda %}
+			<div class="container" id="training-type-{{loop.index}}">
+				<div class="accordion" id="accordionAgenda-{{loop.index}}">
+					<div class="card">
+						<div class="card-header" id="headingOne-{{loop.index}}">
+							<h3 class="collapsed" data-toggle="collapse" data-target="#collapseOne-{{loop.index}}" aria-expanded="false" aria-controls="collapseOne-{{loop.index}}">
+								{{trainingItem.agenda.title}}
+							</h3>
+							<p class="agenda-description">{{trainingItem.agenda.agenda_description}}</p>
+						</div>
+
+						<div id="collapseOne-{{loop.index}}" class="collapse" aria-labelledby="headingOne-{{loop.index}}" data-parent="#accordionAgenda-{{loop.index}}">
+							<dl class="card-body row">
+								<dt class="col-md-6">
+									{{trainingItem.agenda.agenda_left|raw}}
+								</dt>
+								<dd class="col-md-6">
+									{{trainingItem.agenda.agenda_right|raw}}
+								</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>
+</div>

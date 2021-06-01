@@ -1,0 +1,45 @@
+@import "~@/scss/base";
+
+
+.impressum-page {
+  .top-banner {
+    &-image {
+      text-align: center;
+    }
+  }
+
+  .get-opportunities-block {
+    padding-top: 56px;
+  }
+}
+
+@include desktop {
+  .impressum-page {
+    .top-banner {
+      &-image {
+        img {
+          max-width: 386px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile() {
+  .impressum-page {
+    .top-banner {
+      &--impressum {
+        padding-bottom: 15.625vw;
+      }
+      &-image {
+        text-align: center;
+        padding-top: 0;
+        padding-left: 0;
+        img {
+          max-width: 260px;
+        }
+      }
+    }
+  }
+
+}

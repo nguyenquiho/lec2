@@ -1,0 +1,61 @@
+@import "~@/scss/base";
+
+.partners-detail-page {
+  .top-banner {
+    padding-top: 100px;
+    padding-bottom: 10vw;
+    :after {
+      display: none;
+    }
+  }
+}
+
+@include tablet-up() {
+  .partners-detail-page {
+    .banner-loop-block {
+      &:after {
+        background-image: url('~@/assets/images/bg-gray-top-radius.png');
+      }
+    }
+  }
+}
+
+
+@include tablet() {
+  .partners-detail-page {
+    .top-banner {
+      padding-top: 60px;
+      padding-bottom: 10vw;
+    }
+  }
+}
+
+@include mobile() {
+  .partners-detail-page {
+    .top-banner {
+      padding-top: 60px;
+      padding-bottom: 20vw;
+    }
+
+    .banner-loop-block{
+      position: relative;
+      z-index: 2;
+      margin-top: -12vw;
+      padding-top: 70px;
+      &:after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: url("~@/assets/images/bg-gray-top-radius-mb.png") center top no-repeat;
+        background-size: 100% auto;
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,37 @@
+{% extends "@views/layouts/layout-default.twig" %}
+
+{# block declare #}
+
+{%
+  set viewData = {
+    bodyClass: 'partners-detail-page',
+    jsController: 'partners',
+    headerTheme: 'white',
+    footerType: 'primary'
+  }
+%}
+
+{% block pageContent %}
+  {% include "@views/components/top-banner-title/top-banner-title.twig" with {
+    'data': {
+      'title': page_data.post_type
+    },
+    theme: 'info'
+  } %}
+
+  {% include "@views/components/banner-loop/banner-loop.twig" with {
+    'data': page_data.custom_data.banner_blocks,
+    'partner_logo': page_data.thumbnail
+  }%}
+
+  {% include "@views/components/join-block/join-block.twig" with {
+    data: global.theme_options.join_with_us,
+  }%}
+
+  {% include "@views/components/get-opportunities/get-opportunities.twig" with {
+    btnTheme: 'primary',
+    theme: 'info',
+  }%}
+
+
+{% endblock %}

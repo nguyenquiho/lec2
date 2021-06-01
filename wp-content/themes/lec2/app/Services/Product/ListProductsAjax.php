@@ -50,32 +50,23 @@ class ListProductsAjax extends AbstractListingAjax
 
             $query = "SELECT `post_id` FROM wp_postmeta WHERE `meta_key` LIKE 'execution_of_training_live_course_dates_%_date' AND DATE_FORMAT(`meta_value`,'%Y-%m-%d') BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}' GROUP BY `post_id`";
             $results = $wpdb->get_results( $query );
-            // $query = <<<EOT
-            // SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt1 ON p.id = mt1.post_id LEFT JOIN wp_postmeta AS mt2 ON mt1.post_id = mt2.post_id
-            // WHERE
-            //     p.post_type = 'product' AND
-            //     ( mt1.meta_key LIKE 'execution_of_training_live_course_dates_%_date' AND mt1.meta_value BETWEEN {$_GET['date_from']} AND {$_GET['date_to']} )
-            // GROUP BY p.id
-            // EOT;
-            // die($query);
+
             $array = array();
             foreach($results as $re){
                 $array[] = $re->post_id;
             }
             $array = implode("','",$array);
-            // debug($array,true);
+
             $query = <<<EOT
             SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt1 ON p.id = mt1.post_id
             WHERE
                 p.post_type = 'product' AND
+                p.post_status = 'publish' AND
                 ( mt1.meta_key LIKE 'training_types_%_training_type' AND mt1.meta_value IN ('{$array}') )
             GROUP BY p.id
             EOT;
             
-            // $products = $wpdb->get_results( $query );
             $objs = $wpdb->get_results( $query );
-    
-            // debug($query,true);
         }
         else{
             $objs = array();

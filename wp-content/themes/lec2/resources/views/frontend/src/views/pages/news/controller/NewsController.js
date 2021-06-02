@@ -21,7 +21,7 @@ class NewsController extends AbstractController {
           },
         },
         {
-          breakpoint: 767,
+          breakpoint: 768,
           settings: {
             initialSlide: 1,
             slidesToShow: 1,
@@ -36,9 +36,12 @@ class NewsController extends AbstractController {
     this.$LoadMoreBtn = this.$newsBlock.find('#loadMore');
 
     this.$newsList = this.$newsBlock.find('#news-item-listing');
+    this.$newsWrapper = this.$newsBlock.find('.news-item-wrapper');
+    this.$newsLink = this.$newsBlock.find('.news-link');
 
     this.$scope.newsList = {
       items: [],
+      pageNumber: 1,
     };
 
     this.getMorePostFirst();
@@ -47,32 +50,47 @@ class NewsController extends AbstractController {
 
   getMorePost = async (postsPerPage) => {
     const {
-      $LoadMoreBtn, $newsList, $newsBlock,
+      $LoadMoreBtn, $newsList, $newsWrapper, $newsLink,
     } = this;
+
+    const pageNumber = this.$scope.newsList.pageNumber;
 
     const data = {
       postsPerPage,
+      pageNumber,
     };
 
-    $newsList.loading(true);
     $LoadMoreBtn.hide();
+    $newsWrapper.loading(true);
 
     try {
       const resp = await AjaxService.getInstance().getMorePost(data);
       if (resp) {
         this.$scope.newsList = {
           items: [...this.$scope.newsList.items, ...resp.data],
+          pageNumber,
         };
+
+        this.$scope.newsList.pageNumber++;
 
         if (global.viewport.isMobile || global.viewport.isTablet) {
           $newsList.slick(this.slickOption);
+        }
+
+        $LoadMoreBtn.hide();
+
+        if (resp.show_load_more) {
+          $LoadMoreBtn.show();
+        } else {
+          $LoadMoreBtn.hide();
         }
       }
     } catch (error) {
       console.error(error);
     }
-    $newsList.loading(false);
-    $LoadMoreBtn.show();
+    $newsList.addClass('all-loaded');
+    $newsLink.addClass('all-loaded');
+    $newsWrapper.loading(false);
   }
 
   getMorePostFirst() {
@@ -80,10 +98,13 @@ class NewsController extends AbstractController {
   }
 
   initLoadMorePost() {
-    const { $LoadMoreBtn, $newsFeedBlock, $slickSlider } = this;
+    const { $LoadMoreBtn, $newsList } = this;
     $LoadMoreBtn.on('click', () => {
+      if (global.viewport.isMobile || global.viewport.isTablet) {
+        $newsList.slick('unslick');
+      }
+
       this.getMorePost(4);
-      $LoadMoreBtn.hide();
     });
   }
 }

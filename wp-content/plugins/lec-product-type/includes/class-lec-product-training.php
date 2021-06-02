@@ -38,11 +38,27 @@ class WC_Product_Training extends WC_Product {
             $product = get_fields( $this->id );
             foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
                 foreach ($product['training_types'] as $key => $training_type) {
-                    if ($training_type['training_type'] ->ID == $cart_item['training_type_id'] && $training_type['cost'] != '') {
-                        return $this->parse_price($training_type['cost']);
+                    if ($training_type['training_type']->ID == $cart_item['training_type_id']) {
+                        if ($cart_item['execution_of_training']) {
+                            switch ($cart_item['execution_of_training']) {
+                                case 'live_video':
+                                    return $this->parse_price($training_type['execution_of_training']['live_course_cost']);
+                                    break;
+                                
+                                case 'recorded_video':
+                                    return $this->parse_price($training_type['execution_of_training']['recorded_video_cost']);
+                                    break;
+                            }
+                        } else {
+                            if ($training_type['cost'] != '') {
+                                return $this->parse_price($training_type['cost']);
+                            }
+                        }
                     }
                 }
-                $price = $this->get_training_cost($cart_item['training_type_id']);
+                if (!$training_type['cost']) {
+                    $price = 0;
+                }
                 return $this->parse_price($price);
             }
             return 0;
@@ -53,6 +69,29 @@ class WC_Product_Training extends WC_Product {
     public function get_training_type( $id ) {
         if(function_exists('get_fields')){
             return get_fields($id);
+        }
+        return '';
+    }
+
+    public function get_training_date( $cart_item ) {
+        if (!empty($cart_item['time']) && $cart_item['time']!= 'Array') {
+            return $cart_item['time'];
+        }
+        return '';
+    }
+
+    public function get_execution_of_training( $cart_item ) {
+        if ($cart_item['execution_of_training']=='live_video') {
+            return 'Live Course';
+        } elseif ($cart_item['execution_of_training']=='recorded_video') {
+            return 'Recorded Video';
+        }
+        return '';
+    }
+
+    public function get_training_url( $cart_item ) {
+        if (!empty($cart_item['training_url'])) {
+            return $cart_item['training_url'];
         }
         return '';
     }

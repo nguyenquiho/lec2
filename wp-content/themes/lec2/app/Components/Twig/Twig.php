@@ -114,6 +114,11 @@ class Twig extends AbstractTwig
             return  apply_filters('the_content',$text);
        });
 
+        /** format the content of ACF Wysiwyg Editor */
+        $this->filters[] = new \Twig_SimpleFilter('contentFormat',function($text){
+            return  apply_filters('acf_the_content',$text);
+        });
+
        $this->filters[] = new \Twig_SimpleFilter('esc_url',function($text){
             return esc_url( __($text,'lec2_text_domain'));
        });
@@ -160,75 +165,72 @@ class Twig extends AbstractTwig
      */
     private function generateLanguagesAvailableUrl()
     {
+        if (is_plugin_active('qtranslate-x/qtranslate.php')) {
         // Get global config of qtranslate
-        global $q_config;
-        $url = is_404() ? get_option('home') : $url = '';
+            global $q_config;
+            $url = is_404() ? get_option('home') : $url = '';
 
-        // Get current language
-        $current = $q_config['language'];
+            // Get current language
+            $current = $q_config['language'];
 
-        // Create url list lanuages
-        $list = [];
-        // foreach(qtranxf_getSortedLanguages() as $language) {
-        //     $list[$language] = [
-        //         'title' => $q_config['language_name'][$language],
-        //         'url'   => qtranxf_convertURL($url, $language, false, true)
-        //     ];
-        // }
+            // Create url list language
+            $list = [];
+            foreach(qtranxf_getSortedLanguages() as $language) {
+                $list[$language] = [
+                    'title' => $q_config['language_name'][$language],
+                    'url'   => qtranxf_convertURL($url, $language, false, true)
+                ];
+            }
 
-        return ['current' => $current, 'list' => $list];
+            return ['current' => $current, 'list' => $list];
+        }
     }
 
     /**
      * @return array
      */
-    private function getTrainingCats(){
+    private function getTrainingCats() {
         $productCats    = new \App\Services\ProductCat\ListProductCats();
         $cats           = $productCats->execute();
         array_unshift($cats, array("label" => "All", "value" => ""));
 
-       return $cats;
+        return $cats;
     }
 
     /**
      * @return array
      */
-    private function getTrainingModules(){
+    private function getTrainingModules() {
+
         $productCats    = new \App\Services\ProductCat\ListProductCats();
-        $trainingType  = $productCats->execute();
-        array_unshift($trainingType, array("label" => "All", "value" => ""));
+        $catListing     = $productCats->execute();
+        array_unshift($catListing, array("label" => "All", "value" => ""));
 
-        $trainingFormats = new \App\Services\TrainingType\ListTrainingTypes();
-        foreach( $trainingFormats->execute() as $trainingFormat ) {
-            $trainingTypeOptions[] = array(
-                "label" => $trainingFormat["post_title"],
-                "value" => $trainingFormat["ID"]
-            );
-        }
-        $trainingFormat = $trainingTypeOptions;
-        array_unshift($trainingFormat, array("label" => "All", "value" => ""));
+        $trainingType   = new \App\Services\TrainingType\ListTrainingTypes();
+        $typesListing   = $trainingType->executeFilter();
+        array_unshift($typesListing, array("label" => "All", "value" => ""));
 
-        return ['training_type' => $trainingType, 'training_format' => $trainingFormat];
+        return ['training_cat' => $catListing, 'training_type' => $typesListing];
     }
 
     /**
      * @return array
      */
-    private function getTrainingBySchedule(){
-
+    private function getTrainingBySchedule() {
         $types = [
-          ['label' => "All", "value" => "all"],
-          ['label' => "Location", "value" => "location"],
-          ['label' => "Date", "value" => "date"],
-          ['label' => "Type", "value" => "type"]
+            ['label' => "All", "value" => "all"],
+            ['label' => "Keyword", "value" => "type"],
+            ['label' => "Location (coming soon)", "value" => "location"],
+            ['label' => "Date", "value" => "date"],
         ];
 
         $location = [
-          ['label' => "Berlin", "value" => 1],
-          ['label' => "Paris", "value" => 2],
-          ['label' => "New York", "value" => 3],
-          ['label' => "Rome", "value" => 4]
+            ['label' => "Berlin", "value" => 1],
+            ['label' => "Paris", "value" => 2],
+            ['label' => "New York", "value" => 3],
+            ['label' => "Rome", "value" => 4]
         ];
+
         return ['types' => $types, 'location' => $location];
     }
 }

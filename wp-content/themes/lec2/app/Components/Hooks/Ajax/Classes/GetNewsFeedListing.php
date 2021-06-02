@@ -23,18 +23,21 @@ class GetNewsFeedListing extends AbstractAjax
      * getMorePost
      */
     public function getMorePost(){
-      $getPostListing = new ListPostAjax();
-      if ($_POST['postsPerPage'] == -1) {
-          $getPostListing->setPostsPerPage(get_option('options_website_newsfeed_limit'));
-      } else {
+        $getPostListing = new ListPostAjax();
+        $getPostListing->setCurrentPage($_POST['pageNumber']);
         $getPostListing->setPostsPerPage($_POST['postsPerPage']);
-      }
-      $result = $getPostListing->execute();
-      if($result){
-        wp_send_json($result);
-      } else{
-        wp_send_json(array(
-          'status' =>  false
+
+        if ($_POST['postsPerPage'] == 4) {
+            $result = $getPostListing->executeNewsData($_POST['pageNumber']);
+        } else {
+            $result = $getPostListing->execute();
+        }
+
+        if($result){
+            wp_send_json($result);
+        } else {
+            wp_send_json(array(
+                'status' =>  false
         ));
       }
     }

@@ -72,11 +72,14 @@
       }
       &-image {
         margin-bottom: 0;
-        flex-basis: 52%;
+        flex: 1 52%;
         width: 52%;
+        img {
+          min-height: 100%;
+        }
       }
       &-content {
-        flex-basis: 48%;
+        flex: 1 48%;
         width: 48%;
       }
       &-title {
@@ -108,9 +111,7 @@
 
 @include tablet-down {
   .banner-block {
-    .banner-item-image {
-      display: block;
-      margin: 0 auto;
+    .banner-item-image img {
       max-height: 300px;
     }
   }

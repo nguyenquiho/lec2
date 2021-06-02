@@ -106,9 +106,15 @@
       display: flex;
       align-items: center;
       color: $color-dark;
+      margin-bottom: 24px;
       input {
         width: 24px;
         height: 24px;
+      }
+
+      label {
+        margin-bottom: 0;
+        padding-left: 7px;
       }
 
       a {
@@ -133,18 +139,30 @@
       display: none;
     }
   }
-  &--light-green {
+  &--info {
     .emaillist .es_subscription_form_submit {
       background: $color-light-green;
       color: #1C3054;
     }
+
+    .emaillist {
+      label {
+        color: $color-white;
+        a {
+          color: $info;
+          font-weight: 600;
+        }
+      }
+    }
+
   }
   &--primary {
     .emaillist {
-      p {
-        color: $color-white;
+      label {
+        color: $color-dark;
         a {
           color: $primary;
+          font-weight: 600;
         }
       }
 
@@ -165,9 +183,9 @@
     width: 100%;
     form {
       flex-direction: column;
-      align-items: center;
+      .form-group--email,
       .form-actions {
-        margin-left: 0;
+        margin-left: 38px;
       }
       .form-group {
         &--checkbox {
@@ -180,8 +198,15 @@
     }
     .emaillist {
       .es_subscription_form_submit {
-        margin-left: 0;
+        margin-left: 35px;
         margin-top: 7px;
+      }
+
+      p {
+        align-self: flex-start;
+      }
+      .es-field-wrap {
+        padding-left: 35px;
       }
     }
     .es_subscription_message.error {

@@ -22,8 +22,8 @@
     <div class="error-content">
       <p class="title">{{pageData.error_404}}</p>
       <p class="text">{{global.theme_options.text_translation.default_global_settings_text.page_not_found}}</p>
-      <img src="{{pageData.error_image}}" alt={{global.theme_options.text_translation.default_global_settings_text.page_not_found}} />
-      <a class="btn btn-info" href="home.html"> {{global.theme_options.text_translation.default_global_settings_buttons.go_home}} </a>
+      <img class="rounded-8" src="{{pageData.error_image}}" alt={{global.theme_options.text_translation.default_global_settings_text.page_not_found}} />
+      <a class="btn btn-info" href="{{ pageData.home_page }}"> {{global.theme_options.text_translation.default_global_settings_buttons.go_home}} </a>
     </div>
   </div>
 {% endblock %}

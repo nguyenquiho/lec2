@@ -10,10 +10,10 @@
   position: fixed;
   top: 59px;
   z-index: 1000;
-  display: none; 
+  display: none;
   &.show {
     display: block;
-  }  
+  }
   &__close {
     display: none;
     border: 0;
@@ -42,14 +42,14 @@
     overflow-y: auto;
     &::-webkit-scrollbar {
       width:5px;
-    }  
+    }
     &::-webkit-scrollbar-track {
       background: $color-gray;
     }
-    
+
     &::-webkit-scrollbar-thumb {
       background-color: $color-dark;
-    }       
+    }
   }
   .btn-info {
     color: $color-dark;
@@ -96,11 +96,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .select-wrapper {
+        .select-wrapper,
+        .form-control {
           flex-grow: 1;
           max-width: 284px;
         }
-      }      
+      }
     }
   }
 
@@ -135,8 +136,8 @@
       left: 50% !important;
       transform: translateX(-50%);
       margin-top: 0;
-      padding-top: 30px;   
-      max-height: calc(100vh - 30px); 
+      padding-top: 30px;
+      max-height: calc(100vh - 30px);
     }
     &__close {
       display: block;
@@ -149,7 +150,7 @@
 
 @include breakpoint($max: 461px) {
   .filter-header {
-    width: auto; 
+    width: auto;
     max-width: 100%;
   }
 }

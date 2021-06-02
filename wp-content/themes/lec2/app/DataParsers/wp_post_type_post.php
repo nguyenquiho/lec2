@@ -33,8 +33,8 @@ class wp_post_type_post extends wp_post_type_default
         $returnData['url']          = get_the_permalink($this->id);
         $returnData['thumbnail']    = get_the_post_thumbnail_url($this->id);
 
-        if ($returnData['custom_data']['post_video']) {
-            $returnData['custom_data']['post_video'] = apply_filters("modify_post_type", $returnData['custom_data']['post_video']);
+        if ($returnData['custom_data']['video']) {
+            $returnData['custom_data']['video'] = apply_filters("modify_post_type", $returnData['custom_data']['video']);
         }
         return $returnData;
     }

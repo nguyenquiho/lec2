@@ -72,18 +72,39 @@ abstract class AbstractEmailTemplates
      *
      * @return bool
      */
-    public function send(){
-        return  wp_mail($this->recipient,$this->config['subject'], $this->config['body'] , $this->config['headers'], $this->config['attachments']);
+    public function send() {
+        return wp_mail($this->recipient,$this->config['subject'], $this->config['body'] , $this->config['headers'], $this->config['attachments']);
     }
 
     /**
      * Execute
      */
-    public function execute(){
+    public function execute() {
         $this->themeOptions = Container::getInstance()->getThemeOptions();
         $this->createConfigurationBody();
         $this->replaceTags();
-        return $this->send();
+
+        if ($this->send()) {
+            wp_send_json(array(
+                'status'    => true,
+                'message'   => __('Your contact email was sent successfully. Your request will be processed soon.', LEC2_DOMAIN)
+            ));
+        }
+        else {
+            global $ts_mail_errors, $phpmailer;
+
+            if ( ! isset($ts_mail_errors) )
+                $ts_mail_errors = array();
+
+            if ( isset($phpmailer) )
+                $ts_mail_errors[] = $phpmailer->ErrorInfo;
+
+            wp_send_json(array(
+                'status'    => false,
+                'message'   => __('Your contact email could not be sent', LEC2_DOMAIN),
+                'error'     => $ts_mail_errors
+            ));
+        }
     }
 
     /**

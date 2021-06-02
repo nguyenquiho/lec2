@@ -31,6 +31,10 @@ a[href^=tel]:not(.btn) {
   color: inherit;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .hidden-tablet-up {
   @include tablet-up() {
     display: none;
@@ -109,6 +113,10 @@ a[href^=tel]:not(.btn) {
   }
 }
 
+.rounded-8 {
+  border-radius: 8px;
+}
+
 @include mobile {
   .container {
     padding-left: $grid-padding-mb;
@@ -147,6 +155,7 @@ a[href^=tel]:not(.btn) {
       min-width: 210px;
       height: 40px;
       background-color: $color-light-green;
+      font-size: 1.4rem;
       color: $color-primary;
       box-shadow: none;
       font-weight: 600;

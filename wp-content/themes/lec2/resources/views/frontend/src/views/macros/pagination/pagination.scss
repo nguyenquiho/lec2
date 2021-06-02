@@ -20,6 +20,7 @@
       border-color: $info;
       color: $info;
       cursor: default;
+      pointer-events: none;
     }
     &.prev,
     &.next {
@@ -27,6 +28,9 @@
       &:hover {
         border-color: $color-blue;
         color: $color-blue;
+      }
+      em {
+        pointer-events: none;
       }
     }
     &.disabled {

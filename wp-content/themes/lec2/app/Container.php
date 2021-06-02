@@ -158,7 +158,7 @@ class Container
      */
     public function getThemeOptions(){
 
-        return   Helper::getFields(ThemeOptions::_NAME);
+        return Helper::getFields(ThemeOptions::_NAME);
     }
 
     /**

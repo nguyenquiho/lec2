@@ -73,7 +73,6 @@
     "node-sass": "^4.9.3",
     "progress-bar-webpack-plugin": "^1.11.0",
     "pug-loader": "^2.4.0",
-    "px-jquery-pagination": "^1.0.6",
     "raw-loader": "^4.0.1",
     "resolve-url-loader": "^2.3.0",
     "rivets": "^0.9.6",

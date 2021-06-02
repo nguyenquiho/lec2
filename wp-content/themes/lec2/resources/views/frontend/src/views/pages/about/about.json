@@ -12,7 +12,7 @@
       "about_list": [
         {
           "title": "Lattice Education Competence Center",
-          "content": "<p>LEC2 helps you to use the available FPGA technology from Lattice Semiconductor effectively. We turn engineers and technicians into FPGA experts. </p><p>Our structured and extensive training program imparts the know-how for the entire development process – from conception to physical implementation, and helps you face these challenges. Securing the future through qualification with leading experts.</p><p>Competently imparted first-hand knowledge is becoming more and more essential for the successful use of new technologies. Only well-trained employees can cope with the demands placed on them in the time allotted.</p>",
+          "content": "<p><b>LEC2 helps you to use the available FPGA technology </b> from Lattice Semiconductor effectively. We turn engineers and technicians into FPGA experts. </p><p>Our structured and extensive training program imparts the know-how for the entire development process – from conception to physical implementation, and helps you face these challenges. Securing the future through qualification with leading experts.</p><p>Competently imparted first-hand knowledge is becoming more and more essential for the successful use of new technologies. Only well-trained employees can cope with the demands placed on them in the time allotted.</p>",
           "image": "~@/assets/images/about/about04.png"
         },
         {
@@ -105,7 +105,7 @@
       },
       "location": {
         "title": "Locations",
-        "location_map": "~@/assets/images/about/gmap.png",
+        "location_map":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155421.59372196946!2d13.28465008095959!3d52.50697037933168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e373f035901%3A0x42120465b5e3b70!2sBerlin%2C%20Germany!5e0!3m2!1sen!2s!4v1620710839350!5m2!1sen!2s\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>",
         "location_list": [
           {
             "address": "2715 Ash Dr. San Jose, South Dakota 83475",

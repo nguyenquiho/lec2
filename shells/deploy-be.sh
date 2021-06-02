@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-cd /var/www/lec2
-
 #cp -r ./wp-content/uploads.dist/* ./wp-content/uploads
 #chgrp www-data ./wp-content/uploads -R
 #chmod -R 775 ./wp-content/uploads
@@ -23,6 +21,6 @@ echo "\n"
 
 # Clear twig cache
 echo "- Clear twig wp-content/uploads/cache folder"
-cd $projectRoot
-rm -rf wp-content/uploads/cache/
+pwd
+rm -rf /var/www/lec2/wp-content/uploads/cache/*
 

@@ -7,10 +7,12 @@
       'items':breadcrumb_items
     }%}
     <h1>{{ topBannerData.top_banner_title}}</h1>
-    <div class="top-banner-image">
-        <img src="{{ topBannerData.top_banner_background }}" alt="{{topBannerData.top_banner_title}}"/>
-    </div>
-    <div class="lead">{{ topBannerData.top_banner_description|raw}}</div>
+    <div class="top-banner-text">
+      <div class="top-banner-image">
+          <img class="rounded-8" src="{{ topBannerData.top_banner_background }}" alt="{{topBannerData.top_banner_title}}"/>
+      </div>
+      <div class="lead">{{ topBannerData.top_banner_description|content|raw}}</div>
+      </div>
     </div>
   </div>
 </div>

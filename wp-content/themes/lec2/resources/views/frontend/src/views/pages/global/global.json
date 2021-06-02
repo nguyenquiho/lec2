@@ -1,6 +1,6 @@
 {
   "global": {
-    "home_url": "index.html",
+    "home_url": "home.html",
     "page_title": "LEC2",
     "site_description": "Site description",
     "ajax_url": "{site_url}/wp-admin/admin-ajax.php",
@@ -57,7 +57,7 @@
     "filter_modules": {
       "typeText": "Training type",
       "formatText": "Format",
-      "training_type": [
+      "training_cat": [
         { "label": "All", "value": 28 },
         { "label": "Application", "value": 28 },
         { "label": "Architecture", "value": 29 },
@@ -65,7 +65,7 @@
         { "label": "Optimization", "value": 31 },
         { "label": "Tools", "value": 32 }
       ],
-      "training_format": [
+      "training_type": [
         { "label": "All", "value": 39 },
         { "label": "Webinar", "value": 40 },
         { "label": "Seminar", "value": 41 },
@@ -219,7 +219,8 @@
         "title": "Invest in the future and start your FPGA journey with us!",
         "description": "We give you the knowledge and are committed to innovate. We have the key solutions and are providing you with all the tools necessary in this constantly evolving and future oriented industry.",
         "agreement": "I agree with <a href='privacy-policy.html'>Privacy Policy</a>",
-        "email": "E - Email"
+        "email": "E - Email",
+        "newsletter_success_message": "Your subscription was successful! <br> Kindly check your mailbox and confirm your subscription. If you don't <br> see the email within a few minutes, check the spam/junk folder."
       },
       "text_translation": {
         "default_global_settings_buttons": {
@@ -327,9 +328,6 @@
         "error_404": "Error 404",
         "error_image": "~@/assets/images/error-page.png"
       },
-      "newsletter": {
-        "newsletter_success_message": "Your subscription was successful! <br> Kindly check your mailbox and confirm your subscription. If you don't <br> see the email within a few minutes, check the spam/junk folder."
-      },
       "breadcrumb_items": [
         { "title": "Trainings Modules", "url": "trainings-overview.html" },
         {
@@ -342,6 +340,9 @@
         "description": "<p>We cooperate with many partners from various industries and offer a worldwide partner network of experts. So don't wait, become a part of this network and benefit from synergies!</p>",
         "button_title": "Become a Partner",
         "link": "#"
+      },
+      "news_feed": {
+        "news_feed_title": "Get the latest news from LEC2!"
       }
     }
   }

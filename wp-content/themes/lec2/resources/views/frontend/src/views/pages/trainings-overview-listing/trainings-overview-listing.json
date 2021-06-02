@@ -5,7 +5,7 @@
   "page_data": {
     "custom_data": {
       "banner": {
-        "mage": "~@/assets/images/training-listing/training-listing-banner.png",
+        "image": "~@/assets/images/training-listing/training-listing-banner.png",
         "title": "Architecture Trainings",
         "description": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
       },

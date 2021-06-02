@@ -28,11 +28,12 @@
   {% include "@views/components/banner-loop/banner-loop.twig" with {
     data: page_data.custom_data.training_overview_list
   }%}
-
-  {% include "@views/pages/trainings-overview-listing-detail/includes/training-type/training-type.twig" with {
-    'data': page_data.custom_data.training_types,
-    'agenda': page_data.custom_data.agenda
-  }%}
+  {% if page_data.custom_data.training_types != [] %}
+    {% include "@views/pages/trainings-overview-listing-detail/includes/training-type/training-type.twig" with {
+      'data': page_data.custom_data.training_types,
+      'agenda': page_data.custom_data.agenda
+    }%}
+  {% endif %}
 
   {% include "@views/components/get-opportunities/get-opportunities.twig" with {
     btnTheme: 'primary',

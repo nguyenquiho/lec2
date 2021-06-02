@@ -27,7 +27,7 @@ abstract class AbstractAjax extends AbstractHook
      */
     public function addHook($actionName, $function, $priority = 0, $params = 0)
     {
-        add_action( "wp_ajax_{$actionName}", [$this,$function]);
+        add_action( "wp_ajax_{$actionName}", [$this, $function]);
         add_action( "wp_ajax_nopriv_{$actionName}",[$this, $function] );
     }
 

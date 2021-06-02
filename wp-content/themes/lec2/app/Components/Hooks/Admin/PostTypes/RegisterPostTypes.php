@@ -13,8 +13,8 @@ use App\Components\Hooks\Admin\PostTypes\Classes\Office;
 use App\Components\Hooks\Admin\PostTypes\Classes\Partner;
 use App\Components\Hooks\Admin\PostTypes\Classes\Testimonial;
 use App\Components\Hooks\Admin\PostTypes\Classes\TrainingType;
+use App\Components\Hooks\Admin\PostTypes\Classes\TrainingFormat;
 use App\Components\Hooks\Admin\PostTypes\Classes\Video;
-use App\Components\Hooks\Admin\PostTypes\Classes\Format;
 
 /**
  * Class RegisterPostTypes - After we have created the custom post types that will be registered here
@@ -35,8 +35,8 @@ class RegisterPostTypes implements ComponentInterface
            new Partner(),
            new Testimonial(),
            new TrainingType(),
+           new TrainingFormat(),
            new Video(),
-           new Format(),
        ];
 
        $this->initPostType();

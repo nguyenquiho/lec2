@@ -8,7 +8,7 @@ $singlePage = new \App\Services\Page\Single();
 $data = $singlePage->execute();
 
 return [
-    'view' => 'pages/datenschutz/datenschutz.twig',
+    'view' => 'pages/privacy-policy/privacy-policy.twig',
     'data' =>  $data
 ];
 

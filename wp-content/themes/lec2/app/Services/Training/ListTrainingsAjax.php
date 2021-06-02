@@ -29,39 +29,41 @@ class ListTrainingsAjax extends AbstractListingAjax
         'post_status'       => 'publish'
     ];
 
-    public function makeFilter(){
+    public function makeFilter() {
+
         if ($_GET) {
-            $key = isset($_GET['search']) ? $_GET['search'] : null ;
-            $taxonomyID = isset($_GET['training_cat_id']) ? $_GET['training_cat_id'] : null;
+            $key            = isset($_GET['search']) ? $_GET['search'] : null ;
+            $taxonomyID     = isset($_GET['training_cat_id']) ? $_GET['training_cat_id'] : null;
             $trainingTypeID = isset($_GET['training_type_id']) ? $_GET['training_type_id'] : null;
         }
         if ($_POST) {
-            $key = isset($_POST['search']) ? $_POST['search'] : null ;
-            $taxonomyID = isset($_POST['training_cat_id']) ? $_POST['training_cat_id'] : null ;
+            $key            = isset($_POST['search']) ? $_POST['search'] : null ;
+            $taxonomyID     = isset($_POST['training_cat_id']) ? $_POST['training_cat_id'] : null ;
             $trainingTypeID = isset($_POST['training_type_id']) ? $_POST['training_type_id'] : null;
         }
         
-        if(!empty($key)){
+        if (!empty($key)) {
             $this->query['s'] = $key;
         }
-        $this->query['tax_query'] = [
-            'taxonomy' => 'product_cat',
-            'field' => 'term_id',
-            'terms' => 30,
-            'operator' => 'IN',
-        ];
-        if(!empty($taxonomyID)){
+
+        if (!empty($taxonomyID)) {
             $this->query['tax_query'] = array( 
                 array( 
-                    'taxonomy' => 'product_cat', //or tag or custom taxonomy
-                    'field' => 'id', 
-                    'terms' => $taxonomyID
+                    'taxonomy'  => 'product_cat', //or tag or custom taxonomy
+                    'field'     => 'id',
+                    'terms'     => $taxonomyID
                 ),
             );
         }
-        if(!empty($trainingTypeID)){
-            $this->query['meta_key'] = 'training_types_&&_training_type';
-            $this->query['meta_value'] = $trainingTypeID;
+
+        if (!empty($trainingTypeID)) {
+
+            $this->query['meta_query'] = array(
+                array(
+                    'key'   => 'training_types_&&_training_type',
+                    'value' => $trainingTypeID
+                )
+            );
         }
     }
 }

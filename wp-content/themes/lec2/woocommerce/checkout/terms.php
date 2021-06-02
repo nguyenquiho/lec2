@@ -27,14 +27,14 @@ if ( apply_filters( 'woocommerce_checkout_show_terms', true ) && function_exists
 		<p class="form-row validate-required">
 			<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 			<input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="terms" <?php checked( apply_filters( 'woocommerce_terms_is_checked_default', isset( $_POST['terms'] ) ), true ); // WPCS: input var ok, csrf ok. ?> id="terms" />
-				<span class="woocommerce-terms-and-conditions-checkbox-text">I have read and agree to the website <a href="<?php echo esc_url(get_permalink(wc_terms_and_conditions_page_id())); ?>">terms and conditions</a></span>&nbsp;<span class="required">*</span>
+				<span class="woocommerce-terms-and-conditions-checkbox-text">I have read the terms and conditions and accept them.</span>&nbsp;<span class="required">*</span>
 			</label>
 			<input type="hidden" name="terms-field" value="1" />
 		</p>
 		<p class="form-row validate-required">
 			<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 			<input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="privacy_policy" id="privacy_policy" />
-				<span class="woocommerce-privacy-policy-checkbox-text">You agree that your data will be used to process your request. Further information and revocation instructions can be found in the <a href="<?php echo esc_url(get_permalink(wc_privacy_policy_page_id())); ?>">privacy policy</a>.</span>&nbsp;<span class="required">*</span>
+				<span class="woocommerce-privacy-policy-checkbox-text">You agree that your data will be used to process your request. You can find information and revocation instructions in the data <a href="<?php echo esc_url(get_permalink(wc_privacy_policy_page_id())); ?>">protection declaration</a>.</span>&nbsp;<span class="required">*</span>
 			</label>
 			<input type="hidden" name="terms-field" value="1" />
 		</p>

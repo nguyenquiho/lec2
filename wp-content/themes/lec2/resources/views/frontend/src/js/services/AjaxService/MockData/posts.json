@@ -3,10 +3,10 @@
     {
       "post_title": "How to simplify your next system design",
       "post_excerpt": "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.",
-      "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
+      "thumbnail": "",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -22,7 +22,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -38,7 +38,7 @@
       "thumbnail": "./assets/images/news-feed/test-image02.jpg",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "This Shorties demonstrates how to create a new Radiant software project, customize IP using IP Catalog, verify functionality with simulation, set timing and location"
@@ -50,7 +50,7 @@
       "thumbnail": "./assets/images/news-feed/test-image01.jpg",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "First 100 subscribers of our newsletters gets a MachXO3LF Development board for free. Be part of it!"
@@ -62,7 +62,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -78,7 +78,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -94,7 +94,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-3.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "This Shorties demonstrates how to create a new Radiant software project, customize IP using IP Catalog, verify functionality with simulation, set timing and location"
@@ -106,7 +106,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-4.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "First 100 subscribers of our newsletters gets a MachXO3LF Development board for free. Be part of it!"
@@ -118,7 +118,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -134,7 +134,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-2.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
           "custom_data": {
             "video_file": {
               "url": "./assets/images/mov_bbb.mp4"
@@ -150,7 +150,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-3.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "This Shorties demonstrates how to create a new Radiant software project, customize IP using IP Catalog, verify functionality with simulation, set timing and location"
@@ -162,7 +162,7 @@
       "thumbnail": "./assets/images/news-feed/news-feed-image-4.png",
       "url": "news-detail.html",
       "custom_data": {
-        "post_video": {
+        "video": {
 
         },
         "short_description": "First 100 subscribers of our newsletters gets a MachXO3LF Development board for free. Be part of it!"

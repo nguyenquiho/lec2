@@ -272,7 +272,7 @@ abstract class AbstractAcfFields
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    function render($data){
+    function render($data) {
         $view = "{$this->viewPath}/{$this->view}.html.twig";
         TwigLoader::render($view,$data);
     }

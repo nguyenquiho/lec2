@@ -1,9 +1,6 @@
 import { eliComponent } from '@/@core/web/eli-component';
 import AbstractController from '@/@core/web/controllers/abstract';
 import AjaxService from '@/js/services/AjaxService';
-import urlHelper from '@/js/common/helpers/url-helper';
-
-require('px-jquery-pagination');
 
 /**
  *
@@ -22,7 +19,7 @@ class FilterShorties extends AbstractController {
   main() {
     this.$FilterBlock = $('.filter-schedule-form');
     this.$FilterForm = this.$FilterBlock.find('form');
-    this.formData = { posts_per_page: 4 };
+    this.formData = { posts_per_page: 10 };
     const $typeId = $('#type_select');
 
     $('#fromDatepicker').datepicker({
@@ -69,7 +66,7 @@ class FilterShorties extends AbstractController {
       }
     });
 
-    this.$scope.courseList = {
+    this.$scope.courseListSchedule = {
       items: [],
     };
 
@@ -85,59 +82,64 @@ class FilterShorties extends AbstractController {
     const { $FilterForm } = this;
 
     $FilterForm.formValidator({
-      schema: (yup, formValidator) => {
-        const formData = formValidator.getData();
-
+      schema: (yup) => {
         return {
-          keyword: formData.type_id === 'type' ? yup.string().required() : yup.mixed(),
+          keyword: yup.mixed(),
         };
       },
       onSuccess: async ({ data, form }) => {
+        data.page = 1;
         this.loadTraningListSchedule(data);
       },
     });
   }
 
   async loadTraningListSchedule(formData) {
-    const { $FilterForm } = this;
+    const { $FilterForm, $FilterBlock } = this;
     const $courseBlock = $('.filter-schedule-form');
+    const $courseList = $('#scheduleForm .course-item-listing');
+    const $noResult = $('.no-result');
 
-    $FilterForm.loading(true);
-    $courseBlock.addClass('loading');
+    $FilterBlock.loading(true);
+    // $FilterForm.loading(true);
+    // $courseBlock.addClass('loading');
+
     switch (formData && formData.type_id) {
       case 'location':
-        delete this.formData.from;
-        delete this.formData.to;
-        delete this.formData.keyword;
-        this.formData.location_id = formData.location_id;
+        delete formData.from;
+        delete formData.to;
+        delete formData.keyword;
         break;
       case 'date':
-        delete this.formData.location_id;
-        delete this.formData.keyword;
-        this.formData.from = formData.from;
-        this.formData.to = formData.to;
+        delete formData.location_id;
+        delete formData.keyword;
         break;
       case 'type':
-        delete this.formData.from;
-        delete this.formData.to;
-        delete this.formData.location_id;
-        this.formData.keyword = formData.keyword;
+        delete formData.from;
+        delete formData.to;
+        delete formData.location_id;
+        break;
+      case 'all':
+        delete formData.from;
+        delete formData.to;
+        delete formData.location_id;
+        delete formData.keyword;
         break;
       default:
         break;
     }
     this.formData = {
-      ...this.formData,
-      posts_per_page: 4,
+      ...formData,
+      posts_per_page: 10,
     };
 
     try {
-      const resp = await AjaxService.getInstance().sendShortiesCourse(this.formData, {
+      const resp = await AjaxService.getInstance().sendScheduleCourse(this.formData, {
         noMessage: true,
       });
 
       if (resp) {
-        this.$scope.courseList = {
+        this.$scope.courseListSchedule = {
           items: [...resp.items.data],
         };
 
@@ -157,15 +159,23 @@ class FilterShorties extends AbstractController {
           }
           // disable next button
           if (Number(resp.items.current_page) === Number(resp.items.total_pages)) {
-            $pagination.find('.page-num--next').addClass('disabled');
+            $pagination.find('.page-num--next, .page-num--current').addClass('disabled');
           }
+        }
+
+        $noResult.remove();
+        if (resp.items.total_pages === 0) {
+          $courseList.append(`<p class="no-result">${resp.items.message}</p>`);
+        } else {
+          $noResult.remove();
         }
       }
     } catch (error) {
       console.error(error);
     }
-    $FilterForm.loading(false);
-    $courseBlock.removeClass('loading');
+    $FilterBlock.loading(false);
+    // $FilterForm.loading(false);
+    // $courseBlock.removeClass('loading');
   }
 
   handlePaginationSchedule() {

@@ -3,7 +3,6 @@
 .top-banner {
   position: relative;
   z-index: 1;
-  overflow: hidden;
   padding-top: 60px;
   padding-bottom: 10vw;
   color: $color-primary;
@@ -20,10 +19,13 @@
     background: url('~@/assets/images/bg-corner-baner-bottom-w.png') center bottom no-repeat;
     background-size: cover;
   }
+  &--partners-detail {
+    &:after {
+      display: none;
+    }
+  }
   &--default  {
-    background: url('~@/assets/images/bg-top-banner-primary.png') center bottom no-repeat transparent;
-    background-size: cover;
-    // background-size:cover;
+    background-color: $color-primary;
     color: $color-white;
     h1 {
       color: $color-white;
@@ -32,7 +34,7 @@
       &-content {
         color: $color-white;
       }
-    }
+    } 
   }
   &--info  {
     background: $info;
@@ -98,25 +100,15 @@
   }
 }
 
-@include tablet {
-  .top-banner {
-    &--default {
-      background-color: $color-primary;
-    }
-  }
-}
-
 @include mobile() {
   .top-banner {
     padding-top: 35px;
     padding-bottom: 15.625vw;
     &:after {
-      height: 8.77vw;
+      height: 8.895vw;
       background-image: url('~@/assets/images/bg-corner-baner-bottom-w-mb.png');
     }
-    &--default {
-      background-image: url('~@/assets/images/bg-top-banner-primary-mb.png');
-    }
+ 
     h1 {
       font-size: 2.4rem;
       line-height: 32.68px;

@@ -38,8 +38,7 @@ class ListOffices extends AbstractService
     {
         $data = parent::execute();
         wp_reset_query();
+
         return $data;
-
     }
-
 }

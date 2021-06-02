@@ -76,7 +76,7 @@ class ContactForm extends AbstractEmailTemplates
         $themeOptions = $this->themeOptions;
 
         $headerFrom             = $this->email();
-        $subject                = "Contact";
+        $subject                = "Contact Form";
         $body                   = $this->renderEmail();
         $recipientEmail         = isset($themeOptions[ThemeOptions::_CONTACT_RECIPIENT_EMAIL]) ? $themeOptions[ThemeOptions::_CONTACT_RECIPIENT_EMAIL] : '';
         //send for external emails which will come from contact form
@@ -92,42 +92,56 @@ class ContactForm extends AbstractEmailTemplates
     }
 
     public function renderEmail(){
-        $emailContent = '<table bgcolor="#CCC" style="font-family:Helvetica,san-serif;color:#444" width="100%">
-  <tbody>
-    <tr>
-      <td style="padding:0 20px">
-        <table align="center" bgcolor="white" cellpadding="0" cellspacing="0" style="margin-top:20px;margin-bottom:20px;border-radius:7px;width:100%;max-width:550px">
-          <tbody>
-            <tr bgcolor="#1C3054" height="100">
-              <td style="padding:20px 30px;border-radius:7px 7px 0 0"> <a href="" target="_blank"> <img alt="logo" border="0" width="39px" height="60px" style="float:left" src="'.get_site_url().'/wp-content/themes/lec2/resources/views/frontend/dist/assets/images/logo-desktop-w.png'.'" class="logo"> </a> </td>
-            </tr>
-            <tr>
-              <td style="padding:30px 10px 10px"> <b>From:</b> '.$this->fullName().' </td>
-            </tr>
-            <tr>
-              <td style="padding:10px">
-                <b>Message:</b> 
-                <p>'.$this->message().'</p>
-                <p style="padding-top:10px">Phone : '.$this->phone().'</p>
-                <p>Email : '.$this->email().'</p>
-                <p>Title : '.$this->title().'</p>
-                <p>Salutation : '.$this->salutation().'</p>
-                <p>Company : '.$this->company().'</p>
-                <p>Division : '.$this->division().'</p>
-                <p>Street : '.$this->street().'</p>
-                <p>Postcode : '.$this->postcode().'</p>
-                <p>City : '.$this->city().'</p>
-                <p>Country : '.$this->country().'</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:20px 10px;font-size:13px;color:#5c5c5c;text-align:center"> LEC2 © 2021. All rights reserved. </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
+        $emailContent = '<table bgcolor="'.GetBaseSettingEmail::getBackGroundColor().'" style="font-family:Helvetica,san-serif;color:'.GetBaseSettingEmail::getBodyTextColor().'" width="100%">
+    <tbody>
+        <tr>
+            <td style="padding:0 20px">
+                <table align="center" bgcolor="'.GetBaseSettingEmail::getBodyBackGroundColor().'" cellpadding="0" cellspacing="0" style="margin-top:20px;margin-bottom:20px;border-radius:7px;width:100%;max-width:550px">
+                    <tbody>
+                        <tr bgcolor="'.GetBaseSettingEmail::getBaseColor().'" height="100">
+                            <td style="padding:20px 30px;border-radius:7px 7px 0 0"> <a href="" target="_blank"> <img title="lec2-logo" alt="logo" border="0" width="39px" height="60px" style="float:left; display: block;" src="'.GetBaseSettingEmail::getHeaderImage().'" class="logo"> </a> </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:30px 10px 10px"> <b>From:</b> '.$this->fullName().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Subject:</b> '.$this->title().' </td>
+                        </tr>
+                        <tr>
+                             <td style="padding:10px">  <b>Message:</b>  '.$this->message().'</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Phone</b> : '.$this->phone().' </td>
+                        </tr>
+                        <tr>
+                             <td style="padding: 10px"> <b>Email</b> : '.$this->email().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Division</b> : '.$this->division().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Company</b> : '.$this->company().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Street</b> : '.$this->street().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Postcode</b> : '.$this->postcode().' </td>
+                        </tr>
+                        <tr>
+                              <td style="padding: 10px"> <b>City</b> : '.$this->city().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px"> <b>Country</b> : '.$this->country().' </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:20px 10px;font-size:13px;color:#5c5c5c;text-align:center"> '.GetBaseSettingEmail::getFooter().' </td>
+                        </tr>
+                   </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
 </table>';
         return $emailContent;
     }
@@ -138,7 +152,7 @@ class ContactForm extends AbstractEmailTemplates
      * @return mixed|string
      */
     public function fullName(){
-        return (isset($this->data['firstname']) ? $this->data['firstname'] : '')." ".(isset($this->data['lastname']) ? $this->data['lastname'] : '');
+        return (isset($this->data['salutation']) ? $this->data['salutation']: '')." ".(isset($this->data['firstname']) ? $this->data['firstname'] : '')." ".(isset($this->data['lastname']) ? $this->data['lastname'] : '');
     }
 
     /**
@@ -151,7 +165,7 @@ class ContactForm extends AbstractEmailTemplates
     }
 
     public function title(){
-        return isset($this->data['title']) ? $this->data['title'] : '';
+        return isset($this->data['title']) ? $this->data['title'] : 'Contact Form';
     }
 
     public function company(){
@@ -178,10 +192,6 @@ class ContactForm extends AbstractEmailTemplates
         return isset($this->data['city']) ? $this->data['city'] : '';
     }
 
-    public function salutation(){
-        return isset($this->data['salutation']) ? $this->data['salutation'] : '';
-    }
-
     /**
      * Replace phone tag
      *
@@ -194,5 +204,4 @@ class ContactForm extends AbstractEmailTemplates
     public function message(){
         return isset($this->data['message']) ? $this->data['message'] : '';
     }
-
 }

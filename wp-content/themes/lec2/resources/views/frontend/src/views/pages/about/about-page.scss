@@ -1,8 +1,15 @@
 @import "~@/scss/base";
 
+.site-main {
+  overflow: hidden;
+}
+
 .about-page {
   .top-banner--about {
     padding-bottom: 10.5vw;
+    &:after {
+      display: none;
+    }
     .top-banner-image {
       text-align: right;
       padding-right: 5px;

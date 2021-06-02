@@ -13,7 +13,7 @@ export default function installBackToTop() {
   if ($(`#${elementId}`).length === 0) {
     $(document.body).append(backToTopHTML());
   }
-
+  const $footerEl = $('.site-footer');
   const $btnBackToTop = $(`#${elementId}`);
   if ($btnBackToTop.length) {
     const scrollTrigger = 100;
@@ -40,6 +40,16 @@ export default function installBackToTop() {
         },
         700,
       );
+    });
+
+    // back top top postion
+    const getFooterHeight = () => {
+      return $footerEl.outerHeight() + 20;
+    };
+
+    $btnBackToTop.css('bottom', getFooterHeight());
+    $(window).on('resize', () => {
+      $btnBackToTop.css('bottom', getFooterHeight());
     });
   }
 }

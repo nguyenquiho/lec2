@@ -7,7 +7,7 @@
           {{ forms.input({id: 'agree',name: 'agree', value:'', label: agreeText, type: 'checkbox'})}}
       </div>
       {% set emailPlaceholder = global.theme_options.text_translation.default_global_settings_text.default_global_settings_email %}
-      <div class="form-group">
+      <div class="form-group form-group--email">
         {{ forms.input({id: 'email',name: 'email', value:'', placeholder: emailPlaceholder, type: 'email', autocomplete: false})}}
       </div>
       <div class="form-actions">

@@ -24,7 +24,7 @@ class RequestACall extends AbstractValidation
      */
     protected $validatedFields = [
         'firstname'     => ['required' => 'Please insert first name'],
-        'phone'         => ['required' => 'Please insert phone'],
+        'lastname'      => ['required' => 'Please insert last name'],
         'message'       => ['required' => 'Please insert message']
     ];
 

@@ -31,6 +31,7 @@ class ThemeOptions
     const _GOOGLE_TAG_MANAGER           = 'google_tag_manager';
     const _GOOGLE_ANALYTICS             = 'google_analytics';
     const _COOKIES_POLICY               = 'cookies_policy';
+    const _CSS_OVERRIDE                 = 'css_override';
 
     //smtp setting
     const _SMTP                         = 'smtp';

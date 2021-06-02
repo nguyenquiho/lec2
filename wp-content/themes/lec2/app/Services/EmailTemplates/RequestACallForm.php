@@ -70,7 +70,7 @@ class RequestACallForm extends AbstractEmailTemplates
         $themeOptions = $this->themeOptions;
 
         $headerFrom             = "";
-        $subject                = "Request a call";
+        $subject                = "We're Hiring";
         $body                   = $this->renderEmail();
         $recipientEmail         = $themeOptions[ThemeOptions::_CONTACT_RECIPIENT_EMAIL] ?? '';
         //send for external emails which will come from contact form
@@ -86,27 +86,32 @@ class RequestACallForm extends AbstractEmailTemplates
     }
 
     public function renderEmail(){
-        $emailContent = '<table bgcolor="#CCC" style="font-family:Helvetica,san-serif;color:#444" width="100%">
+        $emailContent = '<table bgcolor="'.GetBaseSettingEmail::getBackGroundColor().'" style="font-family:Helvetica,san-serif;color:'.GetBaseSettingEmail::getBodyTextColor().'" width="100%">
   <tbody>
     <tr>
       <td style="padding:0 20px">
-        <table align="center" bgcolor="white" cellpadding="0" cellspacing="0" style="margin-top:20px;margin-bottom:20px;border-radius:7px;width:100%;max-width:550px">
+        <table align="center" bgcolor="'.GetBaseSettingEmail::getBodyBackGroundColor().'" cellpadding="0" cellspacing="0" style="margin-top:20px;margin-bottom:20px;border-radius:7px;width:100%;max-width:550px;">
           <tbody>
-            <tr bgcolor="#1C3054" height="100">
-              <td style="padding:20px 30px;border-radius:7px 7px 0 0"> <a href="" target="_blank"> <img alt="logo" border="0" width="39px" height="60px" style="float:left" src="'.get_site_url().'/wp-content/themes/lec2/resources/views/frontend/dist/assets/images/logo-desktop-w.png'.'" class="logo"> </a> </td>
+            <tr bgcolor="'.GetBaseSettingEmail::getBaseColor().'" height="100">
+              <td style="padding:20px 30px;border-radius:7px 7px 0 0"> <a href="" target="_blank"> <img title="lec2-logo" alt="logo" border="0" width="39px" height="60px" style="float:left; display: block;" src="'.GetBaseSettingEmail::getHeaderImage().'" class="logo"> </a> </td>
             </tr>
             <tr>
-              <td style="padding:30px 10px 10px"> <b>From:</b> '.$this->fullName().' </td>
+              <td style="padding:10px"> <b>From:</b> '.$this->fullName().' </td>
             </tr>
             <tr>
-              <td style="padding:10px">
-                <b>Message:</b> 
-                <p>'.$this->message().'</p>
-                <p style="padding-top:10px">Phone : '.$this->phone().'</p>
-              </td>
+              <td style="padding:10px"> <b>Subject:</b> '.$this->subject().' </td>
             </tr>
             <tr>
-              <td style="padding:20px 10px;font-size:13px;color:#5c5c5c;text-align:center"> LEC2 © 2021. All rights reserved. </td>
+              <td style="padding:10px"><b>Message:</b> '.$this->message().' </td>
+            </tr>
+            <tr>
+              <td style="padding:10px"> <b>Phone:</b> '.$this->phone().' </td>
+            </tr>
+            <tr>
+              <td style="padding:10px"> <b>Email:</b> '.$this->email().' </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 10px;font-size:13px;color:#5c5c5c;text-align:center"> '.GetBaseSettingEmail::getFooter().' </td>
             </tr>
           </tbody>
         </table>
@@ -115,6 +120,10 @@ class RequestACallForm extends AbstractEmailTemplates
   </tbody>
 </table>';
         return $emailContent;
+    }
+
+    public function subject(){
+        return "We're Hiring";
     }
 
     /**
@@ -142,6 +151,15 @@ class RequestACallForm extends AbstractEmailTemplates
      */
     public function message(){
         return isset($this->data['message']) ? $this->data['message'] : '';
+    }
+
+    /**
+     * Replace description tag
+     *
+     * @return mixed|string
+     */
+    public function email(){
+        return isset($this->data['email']) ? $this->data['email'] : '';
     }
 
 }

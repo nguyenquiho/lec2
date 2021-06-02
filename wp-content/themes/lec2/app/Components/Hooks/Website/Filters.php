@@ -23,7 +23,7 @@ use App\TwigLoader;
  * @package App\Components\Hooks\Website
  */
 class Filters extends AbstractFilter
-{ 
+{
 
     protected $functions = [
         'use_block_editor_for_post'     => 'blockEditorForPost',
@@ -96,7 +96,7 @@ class Filters extends AbstractFilter
         }else{
             $obj = new wp_post_type_default();
         }
-        return  $obj->setData($post)->execute(); 
+        return  $obj->setData($post)->execute();
     }
 
     /**
@@ -175,7 +175,10 @@ class Filters extends AbstractFilter
                 $menu[] = 'current-menu-item';
             }
         }
-        if (strpos($_SERVER["REQUEST_URI"], 'training') !== false && strpos($item->url, 'training') !== false) {
+        if ($postType == 'post' && $menu[4] == 'menu-item-183') {
+            $menu[] = 'current-menu-item';
+        }
+        if (strpos($_SERVER["REQUEST_URI"], 'training') !== false && strpos($item->post_name, 'training') !== false) {
             $menu[] = 'current-menu-item';
         }
         if (strpos($_SERVER["REQUEST_URI"], 'partner') !== false && strpos($item->url, 'partner') !== false) {
@@ -225,13 +228,13 @@ class Filters extends AbstractFilter
         return "text/html";
     }
 
-    public function redirectToCheckout(){
+    public function redirectToCheckout() {
         global $woocommerce;
         $checkout_url = $woocommerce->cart->get_checkout_url();
         return $checkout_url;
     }
 
-    public function woocommerceGetPriceHtml($price, $product){
+    public function woocommerceGetPriceHtml($price, $product) {
         if ( $price == wc_price( 0.00 ) )
 		    return 'free';
 	    else
@@ -252,16 +255,17 @@ class Filters extends AbstractFilter
                 $("#arrival_date, #departure_date").datepicker();
             });
         </script>';
+
         woocommerce_form_field( 'in_house_training', array(
             'type'          => 'checkbox',
             'class'         => array('in_house_training form-row-wide'),
-            'label'   => __('Please submit an offer for an in-house training'),
+            'label'   => __('I ask for an offer for in-house training.'),
         ), $checkout->get_value( 'in_house_training' ));
-        
+
         woocommerce_form_field( 'room_reservation', array(
             'type'          => 'checkbox',
             'class'         => array('room_reservation form-row-wide'),
-            'label'   => __('I need a room reservation at the conference hotel'),
+            'label'   => __('Room reservations in the conference hotel are desirable.'),
         ), $checkout->get_value( 'room_reservation' ));
 
         echo '<div class="room-reservation"><h4>Room reservation</h4>';
@@ -289,17 +293,17 @@ class Filters extends AbstractFilter
     }
 
     public function checkoutFieldsAfterTerm($checkout) {
-        woocommerce_form_field( 'subscribe_newsletter', array(
-            'type'          => 'checkbox',
-            'class'         => array('subscribe_newsletter form-row-wide'),
-            'label'   => __('Yes, I would like to subscribe to the LEC2 newsletter. You can find more detailed information in our privacy policy.'),
-        ), $checkout->get_value( 'subscribe_newsletter' ));
-
-        woocommerce_form_field( 'pass_personal_data', array(
-            'type'          => 'checkbox',
-            'class'         => array('pass_personal_data form-row-wide'),
-            'label'   => __('LEC2 may pass on my personal data (name; email address; company name; company address) to Lattice Semiconductor Corp., 5555 NE Moore Ct., Hilsboro, OR 97127 for contact purposes by Lattice Corp.'),
-        ), $checkout->get_value( 'pass_personal_data' ));
+//        woocommerce_form_field( 'subscribe_newsletter', array(
+//            'type'          => 'checkbox',
+//            'class'         => array('subscribe_newsletter form-row-wide'),
+//            'label'   => __('Yes, I would like to subscribe to the LEC2 newsletter. You can find more detailed information in our privacy policy.'),
+//        ), $checkout->get_value( 'subscribe_newsletter' ));
+//
+//        woocommerce_form_field( 'pass_personal_data', array(
+//            'type'          => 'checkbox',
+//            'class'         => array('pass_personal_data form-row-wide'),
+//            'label'   => __('LEC2 may pass on my personal data (name; email address; company name; company address) to Lattice Semiconductor Corp., 5555 NE Moore Ct., Hilsboro, OR 97127 for contact purposes by Lattice Corp.'),
+//        ), $checkout->get_value( 'pass_personal_data' ));
     }
 
     public function enabling_date_picker() {
@@ -314,7 +318,15 @@ class Filters extends AbstractFilter
     }
     
     public function training_type_where( $where ) {
-        $where = str_replace("meta_key = 'training_types_&&_training_type'", "meta_key LIKE 'training_types_%_training_type'", $where);
+        $where = str_replace(
+            array("meta_key = 'training_types_&&_training_type'",
+                "meta_key = 'training_types_&&_execution_of_training_live_course_dates_&&_date'",
+                "meta_key = 'training_types_&&_execution_of_training_has_recorded_video'",
+                "meta_key = 'training_types_&&_execution_of_training_has_live_course'"),
+            array("meta_key LIKE 'training_types_%_training_type'",
+                "meta_key LIKE 'training_types_%_execution_of_training_live_course_dates_%_date'",
+                "meta_key LIKE 'training_types_%_execution_of_training_has_recorded_video'",
+                "meta_key LIKE 'training_types_%_execution_of_training_has_live_course'"), $where);
         return $where;
     }
 }

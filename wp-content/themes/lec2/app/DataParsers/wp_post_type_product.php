@@ -26,9 +26,10 @@ class wp_post_type_product extends wp_post_type_default
 		parent::setCustomData();
     }
 
-    public function execute(){
+    public function execute() {
         $this->id = $this->data->ID;
         $this->setCustomData();
+
         $returnData                 = (array) $this->data;
         $returnData['custom_data']  = $this->customData;
         $returnData['url']          = get_the_permalink($this->id);
@@ -39,9 +40,10 @@ class wp_post_type_product extends wp_post_type_default
 	     */
         if ($returnData['custom_data']['training_types']) {
             foreach ($returnData['custom_data']['training_types'] as $key => $data) {
-                $training_type = array_slice($data, 0, 1);
+                $training_type = (array) $data['training_type'];
                 unset($data['training_type']);
-                $returnData['custom_data']['training_types'][$key] = Helper::mergeArray(apply_filters("modify_post_type", $training_type['training_type']), $data); //default - product (co thi set bt, k co thi set default)
+                $returnData['custom_data']['training_types'][$key] = array_merge($training_type, $data);
+                $returnData['custom_data']['training_types'][$key]['thumbnail'] = get_the_post_thumbnail_url($returnData['custom_data']['training_types'][$key]['ID']);
             }
         }
         

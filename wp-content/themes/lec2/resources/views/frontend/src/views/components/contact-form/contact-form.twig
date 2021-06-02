@@ -23,7 +23,7 @@
 			<div class="row row--group">
 				<div class="col-md-3 col-item">
 					<div class="form-group">
-						{{ forms.select({name:'salutation', id:'salutation', classes: 'selectpicker', options: listSalutation, includeBlank: true, includeText: salutationGroup.salutation, required: false} ) }}
+						{{ forms.select({name:'salutation', id:'salutation', classes: 'selectpicker', options: listSalutation, includeBlank: true, includeText: salutationGroup.salutation, required: true, requireOption: true} ) }}
 					</div>
 				</div>
 				<div class="col-md-3 col-item">
@@ -119,7 +119,7 @@
 			</div>
       {# example captcha #}
       <div class="captcha">
-        <img src="{{captchaImage}}" />
+        {{ recaptcha|content|raw}}
       </div>
       <div class="form-group-actions">
 				<button type="submit" class="btn btn-info">{{buttonText|raw}}</button>

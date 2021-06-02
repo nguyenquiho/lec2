@@ -69,7 +69,13 @@ class Partner extends AbstractPostType
             }
         }
         if($columnName == Field::_DESCRIPTION){
-            $shortDescription = get_field('partners_short_description',$postID);
+            $shortDescription = '';
+            if( have_rows('banner') ):
+                while( have_rows('banner') ): the_row();
+                    $shortDescription = get_sub_field('partners_short_description',$postID);
+                endwhile;
+            endif;
+
             if($shortDescription){
                 echo "$shortDescription";
             }

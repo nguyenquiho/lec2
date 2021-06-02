@@ -15,13 +15,14 @@ abstract class AbstractService
 {
 
     protected $query = [];
+    protected $paged = [];
 
     protected $postsFound;
 
     /**
      * @return mixed
      */
-    public function getPostsFound(){
+    public function getPostsFound() {
         return $this->postsFound;
     }
 
@@ -32,14 +33,18 @@ abstract class AbstractService
     {
         return $this->query;
     }
+    public function getPage()
+    {
+        return $this->paged;
+    }
 
     /**
-     * @param array $query
+     * @param array $paged
      * @return AbstractService
      */
-    public function setQuery($query)
+    public function setPage($paged)
     {
-        $this->query = $query;
+        $this->paged = $paged;
         return $this;
     }
 
@@ -48,7 +53,7 @@ abstract class AbstractService
     /**
      * Detect current page
      */
-    public function detectCurrentPage(){
+    public function detectCurrentPage() {
         $this->query['paged'] = (get_query_var('paged')) ? get_query_var('paged') : 1;
     }
 
@@ -62,9 +67,37 @@ abstract class AbstractService
         global $wp_query;
         $this->detectCurrentPage();
         $this->makeFilter();
+
         // The Query
         $objs = query_posts($this->query);
 
+        $returnData = [];
+
+        if (is_array($objs) && count($objs) > 0) {
+            foreach ($objs as $obj) {
+                $returnData[] = $this->parseData($obj);
+            }
+        }
+
+        $this->postsFound = $wp_query->found_posts;
+
+        wp_reset_postdata();
+        return $returnData;
+    }
+
+    /**
+     * Override function of parent class
+     *
+     * @return array
+     */
+    public function executeNewsData($page)
+    {
+        global $wp_query;
+
+        $this->query['posts_per_page']  = 4;
+        $this->query['paged']           = $page + 2;
+
+        $objs       = query_posts($this->query);
         $returnData = [];
 
         if(is_array($objs) && count($objs) > 0){
@@ -87,7 +120,7 @@ abstract class AbstractService
      */
     public function parseData($obj)
     {
-        $data =  apply_filters("modify_post_type", $obj);
+        $data = apply_filters("modify_post_type", $obj);
         return $data;
     }
 
@@ -95,21 +128,21 @@ abstract class AbstractService
      * Use this function to make query filter
      * @return void
      */
-    public function makeFilter(){
-        $key        = isset($_GET['search']) ? $_GET['search'] : null ;
-        $taxonomyID   = isset($_GET['training_cat_id']) ? $_GET['training_cat_id'] : null;
+    public function makeFilter() {
+        $key = isset($_GET['search']) ? $_GET['search'] : null ;
+        $taxonomyID = isset($_GET['training_cat_id']) ? $_GET['training_cat_id'] : null;
         
-        if(!empty($key)){
-            $this->query['s']           = $key;
+        if (!empty($key)) {
+            $this->query['s'] = $key;
         }
 
-        if(!empty($taxonomyID)){
-            $this->query['tax_query']    = [
+        if (!empty($taxonomyID)) {
+            $this->query['tax_query'] = [
                 array(
-                    'taxonomy'      => 'product_cat',
-                    'field'         => 'term_id',
-                    'terms'         => $taxonomyID,
-                    'operator'      => 'IN'
+                    'taxonomy'  => 'product_cat',
+                    'field'     => 'term_id',
+                    'terms'     => $taxonomyID,
+                    'operator'  => 'IN'
                 ),
             ];
         }

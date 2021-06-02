@@ -30,30 +30,14 @@ class SendContactEmail extends AbstractAjax
         $validation = new Contact();
         $data = Helper::stripTagArray($_POST);
         $result = $validation->setRequest($data)->validate();
-        if($result->getResult()){
-            $isSent =  $sendContactEmail->setData($data)->execute();
-            if($isSent){
-                wp_send_json(array(
-                    'status'    => true,
-                    'message'   => __('Your contact email was sent successfully','lec2_text_domain')
-                ));
-            }
-            else{
-                wp_send_json(array(
-                    'status'    => false,
-                    'message'   => __('Your contact email could not be sent','lec2_text_domain')
-                ));
-            }
-
-        }
-        else{
+        if ($result->getResult()) {
+            $sendContactEmail->setData($data)->execute();
+        } else {
             wp_send_json(array(
                 'status'            => $result->getResult(),
                 'failure_key'       => $result->getFailureKey(),
                 'message'           => __($result->getMessage(),'lec2_text_domain')
             ));
         }
-
-
     }
 }

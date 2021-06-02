@@ -2,6 +2,10 @@
 
 .contact-page {
   .contact-form-block {
+    position: relative;
+    z-index: 2;
+    margin-top: -10.5vw;
+    padding-top:200px;
     margin-bottom: 92px;
     .container {
       max-width: 924px;
@@ -15,14 +19,16 @@
 
 @include tablet-down {
   .contact-page {
-    .contact-form-block {
-      margin-top: 40px;
-    }
-
     .top-banner.top-banner-title {
       padding-top: 5vw;
       padding-bottom: 12vw;
     }
+  }
+}
+
+@include breakpoint($min: 768px, $max:1400px) {
+  .contact-page .contact-form-block {
+    padding-top: 11vw;
   }
 }
 
@@ -31,8 +37,9 @@
     .contact-form-block {
       padding-left: 35px;
       padding-right: 35px;
-      margin-top: 30px;
       margin-bottom: 40px;
+      margin-top: -12vw;
+      padding-top: 12vw;      
     }
   }
 }

@@ -3,11 +3,16 @@
 
 .trainings-overview-listing-detail-page {
   .banner-loop-block {
-    margin-top: -40px;
-    padding-top: 0;
+    position: relative;
+    z-index: 2;
+    margin-top: -7.9vw;
+    padding-top: 100px;
     .banner-loop {
       padding-top: 50px;
       padding-bottom: 50px;
+      &:first-child {
+        padding-top: 0;
+      }
     }
   }
 
@@ -19,8 +24,8 @@
 @include mobile {
   .trainings-overview-listing-detail-page {
     .banner-loop-block {
-      margin-top: -20px;
-      padding-top: 25px;
+      margin-top: -14.625vw;
+      padding-top: 14.625vw;
       .banner-loop {
         padding-top: 15px;
         padding-bottom: 15px;

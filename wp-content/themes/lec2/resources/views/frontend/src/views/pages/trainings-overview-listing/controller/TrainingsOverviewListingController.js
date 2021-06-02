@@ -1,8 +1,8 @@
 import AbstractController from '@/@core/web/controllers/abstract';
 import AjaxService from '@/js/services/AjaxService';
 import urlHelper from '@/js/common/helpers/url-helper';
+import pagination from '@/js/plugins/theme-features/modules/pagination';
 
-require('px-jquery-pagination');
 
 class TrainingsOverviewListingController extends AbstractController {
   main() {
@@ -10,14 +10,15 @@ class TrainingsOverviewListingController extends AbstractController {
       courseList: {},
       category: {},
     };
+
     const params = urlHelper.getQuery();
     this.current_page = 1;
 
-
     this.$trainingBlock = $('.trainings-overview-content');
     this.$FilterForm = this.$trainingBlock.find('.filter-form form');
-    this.loadTraningList(params);
+
     this.setDefaultValue();
+    this.loadTraningList(params);
     this.initFilterForm();
     this.handlePagination();
   }
@@ -77,10 +78,14 @@ class TrainingsOverviewListingController extends AbstractController {
     const _this = this;
     const { $FilterForm } = this;
     const $courseBlock = $('.course-listing-block');
+    const $courseContent = $('.trainings-overview-content');
+    const $filterBlock = $('.filter-block');
+    const $courseListing = $('.course-listing');
+    const $noResult = $('.no-result');
+
     const posts_per_page = global.viewport.isMobile ? 3 : 10;
 
-    $FilterForm.loading(true);
-    $courseBlock.addClass('loading');
+    $courseContent.loading(true);
 
     formData = {
       ...formData,
@@ -102,40 +107,30 @@ class TrainingsOverviewListingController extends AbstractController {
         const $pagination = $('#pagination-container');
         $pagination.html('');
         if (dataTrainings.total_pages > 1) {
-          $pagination.pxpaginate({
-            currentpage: dataTrainings.current_page,
-            totalPageCount: dataTrainings.total_pages,
-            maxBtnCount: 5,
-            align: 'center',
-            nextPrevBtnShow: true,
-            firstLastBtnShow: true,
-            callback(pagenumber, el) {
-              if (Number(pagenumber) !== 0) {
-                urlHelper.appendQuery({
-                  page: pagenumber,
-                });
-                _this.loadTraningList(urlHelper.getQuery());
-              }
-            },
-          });
+          const htmlPagination = pagination(Number(dataTrainings.total_pages), Number(dataTrainings.current_page), `${document.location.host}${document.location.pathname}`, 4);
+          $pagination.html(htmlPagination);
 
           this.current_page = dataTrainings.current_page;
+        }
 
-          // disale prev button
-          if (Number(dataTrainings.current_page) === 1) {
-            $pagination.find('.px-btn-prev').addClass('disabled');
-          }
-          // disale next button
-          if (Number(dataTrainings.current_page) === Number(dataTrainings.total_pages)) {
-            $pagination.find('.px-btn-next').addClass('disabled');
-          }
+        $noResult.remove();
+        $courseListing.removeClass('no-result-wrapper');
+
+        if (dataTrainings.total_pages === 0) {
+          $courseListing.addClass('no-result-wrapper');
+          $courseListing.append(`<p class="no-result">${dataTrainings.message}</p>`);
+        } else {
+          $noResult.remove();
+          $courseListing.removeClass('no-result-wrapper');
         }
       }
     } catch (error) {
       console.error(error);
     }
-    $FilterForm.loading(false);
-    $courseBlock.removeClass('loading');
+
+    $courseContent.loading(false);
+    $filterBlock.addClass('all-loaded');
+    $courseBlock.addClass('all-loaded');
   }
   /**
  * handlePagination on click
@@ -143,26 +138,14 @@ class TrainingsOverviewListingController extends AbstractController {
  * @memberof TrainingsOverviewListingController
  */
   handlePagination() {
-    $(document).on('click', '.px-btn-prev', (e) => {
-      if (Number(e.target.dataset.page) === 0) {
-        e.preventDefault();
+    $(document).on('click', '#pagination-container .page-number', (e) => {
+      e.preventDefault();
+      const page = Number(e.target.dataset.page);
 
-        urlHelper.appendQuery({
-          page: Number(this.current_page) - 1,
-        });
-        this.loadTraningList(urlHelper.getQuery());
-      }
-    });
-
-    $(document).on('click', '.px-btn-next', (e) => {
-      if (Number(e.target.dataset.page) === 0) {
-        e.preventDefault();
-
-        urlHelper.appendQuery({
-          page: Number(this.current_page) + 1,
-        });
-        this.loadTraningList(urlHelper.getQuery());
-      }
+      urlHelper.appendQuery({
+        page,
+      });
+      this.loadTraningList(urlHelper.getQuery());
     });
   }
 }

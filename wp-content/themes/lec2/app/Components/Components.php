@@ -30,7 +30,7 @@ class Components
         $this->registerShortCodes();
         $this->initAcfFields();
 
-        $hooks =  new RegisterHooks();
+        $hooks = new RegisterHooks();
         $hooks->init();
 
         //These line below is used to fix  "user_can_access_admin_page", please refer this link https://core.trac.wordpress.org/ticket/29714

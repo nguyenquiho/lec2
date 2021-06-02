@@ -34,7 +34,7 @@
 {% include "@views/components/filter-shorties/filter-shorties.twig" with {
 	id: "shortiesForm",
 	trainingCat: global.filter_shorties,
-	buttonFilterText: global.theme_options.text_translation.default_global_settings_buttons.filter
+	buttonFilterText: global.theme_options.text_translation.default_global_settings_buttons.filter,
 }%}
 
 {% include "@views/components/filter-schedule/filter-schedule.twig" with {
@@ -44,15 +44,16 @@
 	toLabel: global.theme_options.text_translation.default_global_settings_text.to_text,
 	location: global.filter_schedule.location,
 	keywordLabel: global.theme_options.text_translation.default_global_settings_text.keyword_text,
-	buttonFilterText: global.theme_options.text_translation.default_global_settings_buttons.filter
+	buttonFilterText: global.theme_options.text_translation.default_global_settings_buttons.filter,
 }%}
 
 {% include "@views/components/filter-modules/filter-modules.twig" with {
 	id: "filterModules",
-	action: global.theme_options.links.trainings_overview_listing_link,
+	action: global.theme_options.journey.journey_link,
 	typeLabel: global.theme_options.text_translation.default_global_settings_text.typeText,
 	formatLabel: global.theme_options.text_translation.default_global_settings_text.formatText,
+  keywordLabel: global.theme_options.text_translation.default_global_settings_text.keyword_text,
+	trainingCat: global.filter_modules.training_cat,
 	trainingType: global.filter_modules.training_type,
-	trainingFormat: global.filter_modules.training_format,
 	buttonText: global.theme_options.text_translation.default_global_settings_buttons.show_trainings
 }%}

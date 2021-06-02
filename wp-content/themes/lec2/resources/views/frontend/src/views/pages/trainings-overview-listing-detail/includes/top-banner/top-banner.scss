@@ -3,25 +3,26 @@
 
 .top-banner--training-overview-listing-detail {
   background: #EEECEC;
-  .top-banner {
-    &-image {
-      img {
-        width: 100%;
-        border-radius: 8px;
-      }
+  padding-bottom: 14.625vw;
+  &-image {
+    padding-top: 0;
+    img {
+      width: 100%;
+      border-radius: 8px;
     }
   }
 
   .lead {
     margin-top: 16px;
     p {
-      :last-child {
+      &:last-child {
         margin-bottom: 0;
       }
     }
   }
 
-  .top-banner-img {
+  .top-banner-image {
+    padding-top: 0;
     text-align: center;
   }
 }
@@ -29,25 +30,27 @@
 @include breakpoint($min: $breakpoint-xl) {
   .top-banner--training-overview-listing-detail {
     padding-top: 10px;
-    padding-bottom: 8vw;
-    .container {
+    padding-bottom: 7.9vw;
+    .top-banner-text {
+      display: flex;
+      flex-direction: row-reverse;
       position: relative;
+      margin-bottom: 30px;
     }
     h1 {
       margin-top: 20px;
-      margin-bottom: 32px;
+      margin-bottom: 30px;
     }
     .lead {
-      margin-bottom: 30px;
-      width: 59%;
+      margin-top: 0;     
+      flex-basis: 60.5%;
+      flex-shrink: 0;
+      padding-right: 30px;
     }
     .top-banner-image {
-      position: absolute;
-      right: 2%;
-      top: 34%;
-      img {
-        max-width: 440px;
-      }
+      flex-basis: 39.5%;
+      flex-shrink: 0;
+      padding-right: 9px;
     }
   }
 }

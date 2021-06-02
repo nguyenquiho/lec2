@@ -3,9 +3,7 @@
 		<div class="container">
 			<div class="location-box">
 				<div class="location-box__left">
-					<div class="location-image">
-						<img src="{{ data.location_map }}" alt="{{ data.title }}"/>
-					</div>
+          {{ data.location_map|raw }}
 				</div>
 				<div class="location-box__right">
 					<h2 class="primary-title">{{ data.title }}</h2>

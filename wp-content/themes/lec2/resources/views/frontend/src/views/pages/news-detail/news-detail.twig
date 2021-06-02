@@ -27,14 +27,14 @@
   {% endif %}
 
   {% include "@views/pages/news-detail/includes/slider-image/slider-image.twig" with {
-    }%}
+  }%}
 
   {% include "@views/components/banner-loop/banner-loop.twig" with {
     'data': page_data.custom_data.news_detail_list
   }%}
 
   {% include "@views/components/news-feed/news-feed.twig" with {
-    'data': page_data.custom_data.news_feed
+    'data': global.theme_options.news_feed
   }%}
 
   {% include "@views/components/get-opportunities/get-opportunities.twig" with {

@@ -17,15 +17,25 @@
     }
   }
 
+  .trainings-overview-content {
+    margin-top: -7.95vw;
+    padding-top: 90px;
+    z-index: 2;
+  }
+
   .pagination {
     padding: 15px 0;
+  }
+
+  .no-result-wrapper {
+    justify-content: center;
   }
 }
 
 @include desktop {
   .trainings-overview-listing {
     .top-banner-image {
-      padding-left: 41px;
+      text-align: right;
     }
   }
 }
@@ -33,7 +43,7 @@
 @include mobile {
   .trainings-overview-listing {
     .top-banner {
-      padding-bottom: 11vw;
+      padding-bottom: 10vw;
       &:after {
         background-image: url('~@/assets/images/bg-corner-baner-bottom-gf1-mb.png');
       }
@@ -45,7 +55,8 @@
     }
 
     .trainings-overview-content {
-      padding-top: 6.25vw;
+      margin-top: -10vw;
+      padding-top: 60px;
     }
 
     .pagination {

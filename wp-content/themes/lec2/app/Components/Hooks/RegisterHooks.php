@@ -11,21 +11,21 @@ namespace App\Components\Hooks;
 use App\Components\ComponentInterface;
 use App\Components\Hooks\Admin\AdminActions;
 use App\Components\Hooks\Admin\AdminFilters;
+use App\Components\Hooks\Ajax\Classes\GetTrainingForSchedule;
 use App\Components\Hooks\Ajax\Classes\GetTrainingForShorties;
 use App\Components\Hooks\Ajax\Classes\SendContactEmail;
 use App\Components\Hooks\Ajax\Classes\sendRequestACall;
 use App\Components\Hooks\Ajax\Classes\SendOfferEmail;
+use App\Components\Hooks\Ajax\Classes\sendRequestEmail;
 use App\Components\Hooks\Ajax\Classes\SendTestEmail;
 use App\Components\Hooks\Ajax\Classes\GetPartnerListing;
 use App\Components\Hooks\Ajax\Classes\GetNewsFeedListing;
 use App\Components\Hooks\Ajax\Classes\GetTrainingListing;
 use App\Components\Hooks\Ajax\Classes\AddToCart;
-use App\Components\Hooks\Ajax\Classes\GetProducts;
-use App\Components\Hooks\Ajax\Classes\GetFormats;
-use App\Components\Hooks\Ajax\Classes\GetProductsFormat;
 use App\Components\Hooks\Website\Actions;
 use App\Components\Hooks\Website\Filters;
 use App\Components\Hooks\Website\TemplateHierarchies;
+use App\Components\Hooks\Ajax\Classes\GetProducts;
 
 /**
  * All actions + filters have been register here.
@@ -39,15 +39,14 @@ class RegisterHooks implements ComponentInterface
     /**
      * Init all Hooks
      */
-    public function init()
-    {
+    public function init() {
         $actions = $this->registerActions();
         $filters = $this->registerFilter();
         $ajaxs   = $this->registerAjax();
 
         $hooks = array_merge($actions,$filters,$ajaxs);
 
-        if(count($hooks)>0){
+        if (count($hooks)>0) {
             foreach ($hooks as $hook){
                 $hook->init();
             }
@@ -58,7 +57,7 @@ class RegisterHooks implements ComponentInterface
      * Register filter
      * @return  array
      */
-    public function registerFilter(){
+    public function registerFilter() {
 
         return [
             new Filters(),
@@ -85,19 +84,18 @@ class RegisterHooks implements ComponentInterface
      */
     public function registerAjax(){
         return [
-
-            new  SendContactEmail(),
-            new  sendRequestACall(),
-            new  SendTestEmail(),
-            new  SendOfferEmail(),
-            new  GetPartnerListing(),
-            new  GetNewsFeedListing(),
-            new  GetTrainingListing(),
-            new  AddToCart(),
-            new  GetTrainingForShorties(),
-            new  GetProducts(),
-            new  GetFormats(),
-            new  GetProductsFormat(),
+            new SendContactEmail(),
+            new sendRequestACall(),
+            new sendRequestEmail(),
+            new SendTestEmail(),
+            new SendOfferEmail(),
+            new GetPartnerListing(),
+            new GetNewsFeedListing(),
+            new GetTrainingListing(),
+            new GetTrainingForShorties(),
+            new GetTrainingForSchedule(),
+            new AddToCart(),
+            new GetProducts(),
         ];
     }
 }

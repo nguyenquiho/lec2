@@ -18,27 +18,18 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <table class="shop_table woocommerce-checkout-review-order-table">
-	<thead>
-		<tr>
-			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
-			<th class="product-total"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-		</tr>
-	</thead>
 	<tbody>
 		<?php
 		do_action( 'woocommerce_review_order_before_cart_contents' );
 
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-
 			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 				?>
 				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+                    <th><?php esc_html_e( 'Training:', 'woocommerce' ); ?></th>
 					<td class="product-name">
 						<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</td>
-					<td class="product-total">
-						<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</td>
 				</tr>
 				<?php
@@ -47,12 +38,6 @@ defined( 'ABSPATH' ) || exit;
 
 		do_action( 'woocommerce_review_order_after_cart_contents' );
 		?>
-	</tbody>
-	<tfoot>
-		<tr class="product-type">
-			<th><?php esc_html_e( 'Type', 'woocommerce' ); ?></th>
-			<td><?php echo $_product->get_training_name($cart_item['training_type_id']); ?></td>
-		</tr>	
 
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
@@ -86,12 +71,32 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
+        <?php
+        if(!empty($_product->get_training_date($cart_item)) && $_product->get_training_date($cart_item)!= 'Array'){
+            echo '<tr class="product-time">
+            <th>'.__( 'Date:', 'woocommerce' ).'</th>
+            <td>'.$_product->get_training_date($cart_item).'</td>
+        </tr>';
+        }
+
+        ?>
+
 		<tr class="order-total">
-			<th><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Price:', 'woocommerce' ); ?></th>
 			<td><?php wc_cart_totals_order_total_html(); ?></td>
 		</tr>
 
+        <tr class="product-type">
+            <th><?php esc_html_e( 'Type:', 'woocommerce' ); ?></th>
+            <td><?php echo $_product->get_training_name($cart_item['training_type_id']); ?></td>
+        </tr>
+        <input type="hidden" name="order_custom_date" id="order_custom_date" value="<?php echo $_product->get_training_date($cart_item); ?>"/>
+        <input type="hidden" name="order_custom_url" id="order_custom_url" value="<?php echo $_product->get_training_url($cart_item); ?>"/>
+        <input type="hidden" name="order_custom_execution_of_training" id="order_custom_execution_of_training" value="<?php echo $_product->get_execution_of_training($cart_item); ?>"/>
+        <input type="hidden" name="order_custom_price" id="order_custom_price" value="<?php echo htmlentities(WC()->cart->get_total()); ?>"/>
+        <input type="hidden" name="order_custom_training_type" id="order_custom_training_type" value="<?php echo $_product->get_training_name($cart_item['training_type_id']); ?>"/>
+        <input type="hidden" name="order_custom_training_name" id="order_custom_training_name" value="<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>"/>
 		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
 
-	</tfoot>
+    </tbody>
 </table>

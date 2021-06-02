@@ -11,11 +11,11 @@
 %}
 
 {% block pageContent %}
-  {% set privacy_policy_banner = page_data.custom_data.banner %}
+  {% set privacy_policy_banner = page_data.custom_data.top_banner %}
   {% set bannerData = {
-    top_banner_title: privacy_policy_banner.title,
-    top_banner_background: privacy_policy_banner.image,
-    top_banner_description: privacy_policy_banner.description,
+    top_banner_title: privacy_policy_banner.top_banner_title,
+    top_banner_description: privacy_policy_banner.top_banner_description,
+    top_banner_background: privacy_policy_banner.top_banner_background,
   } %}
   {% include "@views/components/top-banner/top-banner.twig" with {
     'topBannerData': bannerData,

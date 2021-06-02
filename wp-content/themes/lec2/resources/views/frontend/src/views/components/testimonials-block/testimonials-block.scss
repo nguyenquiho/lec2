@@ -122,6 +122,9 @@
 
 
 @include mobile() {
+  .testimonial-block {
+    padding-top: 30px;
+  }
   .testimonial-list {
     .testimonial-item {
       .client {

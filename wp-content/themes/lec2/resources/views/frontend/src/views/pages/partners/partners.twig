@@ -5,7 +5,6 @@
 {%
   set viewData = {
     bodyClass: 'partners-page',
-    jsController: 'partners',
     headerTheme: 'white',
     footerType: 'primary'
   }
@@ -19,6 +18,7 @@
       top_banner_background : partnersBanner.partner_image,
       top_banner_description : partnersBanner.partner_description,
       top_banner_buttonText: partnersBanner.buttonText,
+      top_banner_buttonUrl: partnersBanner.button_url,
       isButton: true
     }
   %}
@@ -69,16 +69,11 @@
     'data': testimonialsData
   }%}
 
-  <div class="bg-gradient-gray">
-    {% include "@views/components/join-block/join-block.twig" with {
-      data: global.theme_options.join_with_us,
-    }%}
-  </div>
 
-    {# {% include "@views/pages/partners/includes/banner-block/banner-block.twig" with {
-      data: page_data.custom_data.values_section,
-      theme: 'transparent'
-    }%} #}
+  {% include "@views/components/join-block/join-block.twig" with {
+    data: global.theme_options.join_with_us,
+  }%}
+
 
   {% include "@views/components/get-opportunities/get-opportunities.twig" with {
     btnTheme: 'primary',

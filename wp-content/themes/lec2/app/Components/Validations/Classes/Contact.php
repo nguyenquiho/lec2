@@ -29,7 +29,6 @@ class Contact extends AbstractValidation
         'street'            => ['required' => 'Please insert street'],
         'postcode'          => ['required' => 'Please insert postcode'],
         'city'              => ['required' => 'Please insert city'],
-        'phone'             => ['required' => 'Please insert phone'],
         'email'             => [
             'required'  => 'Please insert email address',
             'email'     => 'Please insert a valid email address',

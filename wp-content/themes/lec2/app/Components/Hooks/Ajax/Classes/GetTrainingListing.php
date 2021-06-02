@@ -41,6 +41,7 @@ class GetTrainingListing extends AbstractAjax
         }
 
         $return_data['trainings'] = $result;
+        $return_data['trainings']['message'] = 'No results match your search criteria.';
         $return_data['category']['name'] = sprintf( __( '%s Trainings', 'lec2_text_domain' ), $return_data['category']['name'] );
 
         wp_send_json($return_data);

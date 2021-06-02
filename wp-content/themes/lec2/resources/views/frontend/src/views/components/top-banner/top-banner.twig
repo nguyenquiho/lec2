@@ -12,14 +12,14 @@
             <div class="lead">{{ topBannerData.top_banner_description | content | raw}}</div>
           {% endif %}
           {% if topBannerData.isButton %}
-            <button class="btn btn-info top-banner-button"> {{topBannerData.top_banner_buttonText}} </button>
+            <a href="{{ topBannerData.top_banner_buttonUrl }}" class="btn btn-info top-banner-button"> {{topBannerData.top_banner_buttonText}} </a>
           {% endif %}
         </div>
       </div>
       <div class="{{colImage|default('col-md-6')}}">
         {% if topBannerData.top_banner_background %}
           <div class="top-banner-image">
-            <img src="{{ topBannerData.top_banner_background }}" alt="{{topBannerData.top_banner_title}}"/>
+            <img class="rounded-8" src="{{ topBannerData.top_banner_background }}" alt="{{topBannerData.top_banner_title}}"/>
           </div>
          {% endif %}
       </div>

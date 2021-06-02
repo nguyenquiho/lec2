@@ -18,8 +18,8 @@
 
 		{{ wp_head() }}
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="preload" rel="stylesheet">
 		<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     {# Front-end meta tags #}
 		{% include "@views/blocks/meta-head.twig" %}
@@ -34,12 +34,15 @@
 			var eli = {
 				controller: "{{ viewData.jsController }}",
 				wpConfig: {{ wp_config|json_encode|raw }},
-				newsletter: {{ global.theme_options.newsletter|json_encode|raw }},
+				form_offer: {{ global.theme_options.form_offer|json_encode|raw }},
         requestFailed: {{ global.theme_options.text_translation.default_global_settings_text.request_failed|json_encode|raw }},
         thank: {{ global.theme_options.text_translation.default_global_settings_text.thank|json_encode|raw }},
         thankDescription: {{ global.theme_options.text_translation.default_global_settings_text.thankDescription|json_encode|raw }},
-				};
+      };
 		</script>
+    <style type="text/css">
+        {{ global.theme_options.website.css_override | raw }}
+    </style>
 
 	</head>
 	<body {{ body_class("sarita-theme " ~ viewData.bodyClass ) }}>

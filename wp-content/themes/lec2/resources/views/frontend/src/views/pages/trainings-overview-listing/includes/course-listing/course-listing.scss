@@ -17,18 +17,114 @@
 }
 
 .course-listing {
-  .course-card-col {
-    margin-bottom: 24px;
-  }
   .course-card {
+    padding: 20px;
+    background-color: $color-white;
+    box-shadow: 0px 10px 20px rgba(119, 119, 119, 0.2);
+    border-radius: 4px;
     height: 100%;
+
+    &-col {
+      margin-bottom: 24px;
+    }
+
+    &-image {
+      margin-bottom: 24px;
+      text-align: center;
+      img {
+        width: 100%;
+        max-height: 218px;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    }
+
+    &-title {
+      margin-bottom: 10px;
+      a {
+        color: $color-dark;
+      }
+    }
+
+    &-description {
+      margin-bottom: 18px;
+      white-space: pre-line;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
     &-link {
+      text-align: center;
       .btn {
         width: 100%;
       }
     }
   }
+
 }
+
+.course-listing-block,
+.filter-block {
+  opacity: 0;
+  &.all-loaded {
+    opacity: 1;
+  }
+}
+
+@include desktop {
+  .course-listing {
+
+    .course-card {
+      display: flex;
+
+      &-image {
+        margin-bottom: 0;
+        width: 44.6%;
+        flex-basis: 44.6%;
+        img {
+          height: 218px;
+        }
+      }
+
+      &-content {
+        padding-left: 24px;
+        width: 55.4%;
+        flex-basis: 55.4%;
+        display: flex;
+        flex-direction: column;
+
+        &-link {
+          margin-top: auto;
+        }
+      }
+    }
+  }
+}
+
+
+@include tablet-up {
+  .course-card {
+    padding: 32px;
+
+    .course-card-link {
+      margin-top: auto;
+    }
+  }
+}
+
+@include mobile {
+  .course-listing-block {
+    padding-bottom: 33px;
+  }
+}
+
 
 #pagination-container {
   display: flex;
@@ -84,11 +180,5 @@
   .px-points {
     background: none;
     border: 0;
-  }
-}
-
-@include mobile {
-  .course-listing-block {
-    padding-bottom: 33px;
   }
 }

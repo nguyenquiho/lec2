@@ -35,18 +35,19 @@ class GlobalController extends AbstractController {
     $(window).on('es.send_response', (event, $form, response) => {
       $form.removeClass('is-submiting');
       if (response.status === 'SUCCESS') {
-        const mesage = global.eli.newsletter.newsletter_success_message;
+        const mesage = global.eli.form_offer.newsletter_success_message;
 
         $form.next('.es_subscription_message').hide();
         global.swal.fire({
           icon: '',
           title: 'Success',
-          text: mesage,
+          html: mesage,
           showConfirmButton: true,
+          padding: '4.2rem 3.9rem',
           customClass: {
             container: 'swal2-container--newsletter',
           },
-          timer: 5000,
+          // timer: 5000,
         });
         $form[0].reset();
         $form.find('#spinner-image').hide();

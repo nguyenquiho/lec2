@@ -24,7 +24,7 @@
       }
     }
   }
-  &.light-greem {
+  &.info {
     background-color: $color-light-green;
     color: $color-primary;
   }
@@ -46,7 +46,7 @@
 @include mobile() {
   .get-opportunities {
     &-block {
-      padding: 33px 0 47px;
+      padding: 33px 0;
       h2 {
         font-size: 2.4rem;
         line-height: 33px;

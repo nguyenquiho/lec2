@@ -5,15 +5,16 @@
   .top-banner {
     padding-top: 30px;
     padding-bottom: 9vw;
-    &:after {
-      background-image: url('~@/assets/images/bg-corner-baner-bottom-g.png')
-    }
   }
   .bg-gradient-gray {
     padding-top: 50px;
     >.banner-block {
       padding-top: 51px;
     }
+  }
+
+  .join-block {
+    background-color: #eeecec;
   }
 }
 
@@ -29,13 +30,21 @@
   }
 }
 
+@include tablet {
+  .partners-page {
+    .top-banner {
+      padding-bottom: 15vw;
+      &-button {
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
 @include mobile {
   .partners-page {
     .top-banner {
       padding-bottom: 19.6875vw;
-      &:after {
-        background-image: url('~@/assets/images/bg-corner-baner-bottom-g-mb.png')
-      }
       &-image {
         padding-top: 24px;
         padding-left: 0px;
@@ -45,9 +54,10 @@
         }
       }
       .top-banner-content {
-        button {
+        a {
           display: block;
           margin: 16px auto 0;
+          max-width: 210px;
         }
       }
     }

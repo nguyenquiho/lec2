@@ -7,7 +7,7 @@ namespace App\Components\Hooks\Ajax\Classes;
 use App\Components\Hooks\Ajax\AbstractAjax;
 use App\Services\Training\ListTrainingsAjax;
 
-class GetTrainingForShorties extends  AbstractAjax
+class GetTrainingForShorties extends AbstractAjax
 {
     protected $functions = [ 'send_shorties_course' =>  'sendShortiesCourse'];
 
@@ -32,21 +32,20 @@ class GetTrainingForShorties extends  AbstractAjax
             }
 
             $return_data['items'] = $result;
+            $return_data['items']['message'] = 'No results match your search criteria.';
+
             foreach ($return_data['items']['data'] as $key => $item) {
 
                 $return_data['items']['data'][$key] = [
-                    'post_title' => $item['post_title'],
-                    'time'       => "10 April 2021 - 12:00",
-                    'type'       => "Live",
-                    'infor_url'  => $item['url'],
-                    'buy_url'    => '#'
+                    'post_title'        => $item['post_title'],
+                    'infor_url'         => $item['url'],
                 ];
             }
 
             wp_send_json($return_data);
         } else{
             wp_send_json(array(
-                'status' =>  false
+                'status'    => false,
             ));
         }
     }

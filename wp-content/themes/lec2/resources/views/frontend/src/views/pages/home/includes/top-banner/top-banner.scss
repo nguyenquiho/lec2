@@ -4,10 +4,12 @@
   &--homepage {
     padding-top: 38px;
     padding-bottom: 12vw;
-
+    background-color: $color-primary;
+    color: $color-white;
     h1 {
       margin-bottom: 30px;
       text-align: center;
+      color: $color-white;
     }
 
     &::after {
@@ -26,19 +28,8 @@
       width: 100%;
       height: 100%;
       border-radius: 8px;
-      border: 0;
       &:focus {
         outline: none;
-      }
-    }
-  }
-}
-
-@include tablet() {
-  .top-banner {
-    &-video {
-      video {
-        // height: 50%;
       }
     }
   }

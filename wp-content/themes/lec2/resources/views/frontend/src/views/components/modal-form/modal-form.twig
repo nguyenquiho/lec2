@@ -21,20 +21,20 @@
 				<div class="{{colClass}} col-item">
 					<div class="form-group">
 						<div class="form-field">
-							{{ forms.input({id: 'firstname' ~ modalType, name: 'firstname', value:'', placeholder: firstnameLabel|raw, type: 'text', autocomplete: false, required: true})}}
+							{{ forms.input({id: 'firstname' ~ modalType, name: 'firstname', value:'', placeholder: firstnameLabel|raw, type: 'text', autocomplete: false, required: true, requireOption: true})}}
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-item">
 					<div class="form-group">
 						<div class="form-field">
-							{{ forms.input({id: 'lastname' ~ modalType, name: 'lastname', value:'', placeholder: lastnameLabel|raw, type: 'text', autocomplete: false, required: true})}}
+							{{ forms.input({id: 'lastname' ~ modalType, name: 'lastname', value:'', placeholder: lastnameLabel|raw, type: 'text', autocomplete: false, required: true, requireOption: true})}}
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-item">
 					<div class="form-group">
-						{{ forms.input({id: 'email' ~ modalType, name: 'email', value:'', placeholder: emailLabel|raw, type: 'text', autocomplete: false, required: true})}}
+						{{ forms.input({id: 'email' ~ modalType, name: 'email', value:'', placeholder: emailLabel|raw, type: 'text', autocomplete: false, required: true, requireOption: true})}}
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-item">
@@ -44,7 +44,7 @@
 				</div>
 				<div class="col-md-12 col-item">
 					<div class="form-group form-group--message">
-						{{ forms.textarea({id: 'message' ~ modalType, name: 'message', value:'', placeholder: messageLabel|raw, type: 'text'})}}
+						{{ forms.textarea({id: 'message' ~ modalType, name: 'message', value:'', placeholder: messageLabel|raw, type: 'text', requireOption: true})}}
 					</div>
 				</div>
         <div class="col-md-12 col-item">
@@ -57,11 +57,13 @@
         </div>
 			</div>
       <div class="form-group-actions">
-				<button type="submit" class="btn btn-info">{{ sendText }}</button>
-				{% if modalType == 'contact' %}
-        <a type="button" class="btn btn-outline-info" href="{{ global.theme_options.website.pdf_file_download.url }}" target="_blank" download>{{ downloadText }}</a>
-				{% endif %}
-			</div>
+        {% if modalType == 'contact' %}
+          <button type="submit" class="btn btn-info">{{ buttonText }}</button>
+          <a class="btn btn-outline-info" href="{{ global.theme_options.form_contact_top.pdf_file_download.url }}"  target="_blank" rel="noopener" download>{{ downloadText }}</a>
+        {% else %}
+          <button type="submit" class="btn btn-info">{{ sendText }}</button>
+        {% endif %}
+      </div>
 		</form>
 	</div>
 </div>

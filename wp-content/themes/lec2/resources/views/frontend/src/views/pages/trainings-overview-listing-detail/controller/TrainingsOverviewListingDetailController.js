@@ -9,14 +9,11 @@ class TrainingsOverviewListingDetailController extends AbstractController {
 
   initTrainingTabs() {
     const $trainingCard = $('.training-type');
-    const $topBuyLink = $('#training_type_id');
+
     if ($trainingCard.length) {
       $trainingCard.on('click', function () {
         const getDataTarget = $(this).attr('data-target');
-        const hrefValue = $(`${getDataTarget} #training_type_id`).val();
         const typeIndex = $(this).data('index');
-
-        $topBuyLink.val(hrefValue);
 
         $trainingCard.removeClass('selected');
         $(this).addClass('selected');
@@ -24,16 +21,6 @@ class TrainingsOverviewListingDetailController extends AbstractController {
         $(`.training-body ${getDataTarget}`).addClass('show');
         $('.agenda-block .container').removeClass('show');
         $(`.agenda-block ${getDataTarget}`).addClass('show');
-
-        if (getDataTarget === '#training-type-2') {
-          $('.slick-track div:first-child').removeClass('move-item-to-first');
-          $('.slick-track div:first-child').addClass('move-item-to-last');
-        }
-
-        if (getDataTarget === '#training-type-1') {
-          $('.slick-track div:first-child').removeClass('move-item-to-last');
-          $('.slick-track div:first-child').addClass('move-item-to-first');
-        }
 
         // Set index to url
         urlHelper.appendQuery({
@@ -50,23 +37,76 @@ class TrainingsOverviewListingDetailController extends AbstractController {
       } else {
         $trainingCard[0].click();
       }
-    } else {
-      $topBuyLink.hide();
     }
   }
   handleSelectExecutionOfTraining() {
-    const $handleSelectFormat = $('[name="executionOfTraining"]');
-    $handleSelectFormat.on('changed.bs.select', (e, clickedIndex, isSelected) => {
+    const $executionOfTraining = $('.training-container [name="execution_of_training"]');
+    const $handleExecutionOfTrainingSelect = $('.training-container [name="executionOfTrainingSelect"]');
+
+    // set training_type_id value for form
+    $executionOfTraining.each((index, field) => {
+      const $trainingContainer = $(field).closest('.training-container');
+      const $selected = $trainingContainer.find('[name="executionOfTrainingSelect"]');
+      const $buyBtn = $trainingContainer.find('.btn-buy-training');
+      const $noTime = $trainingContainer.find('.no_time_select');
+      if ($selected.length) {
+        const eValue = $selected.val();
+        $(field).val(eValue);
+        if (eValue === 'live_video' && $noTime.length) {
+          $buyBtn.addClass('hidden');
+        } else {
+          $buyBtn.remove('hidden');
+        }
+      }
+    });
+
+    // handle on executionOfTraining change
+    $handleExecutionOfTrainingSelect.on('changed.bs.select', (e, clickedIndex, isSelected) => {
       const val = $(e.target).val();
       const $trainingContainer = $(e.target).closest('.training-container');
       const $format = $trainingContainer.find('.training-body-row--format');
-      const $dates = $trainingContainer.find('.training-body-row--date');
+      const $rowDates = $trainingContainer.find('.training-body-row--date');
+      const $rowDuration = $trainingContainer.find('.training-body-row--duration');
+      const $fieldTrainingTypeIdOfForm = $trainingContainer.find('[name="execution_of_training"]');
+      const $cost = $trainingContainer.find('.cost-value');
+      const $trainingInput = $trainingContainer.find('[name="training_url"]');
+      const $timeSelect = $trainingContainer.find('[name="time_select"]');
+      const $timeInput = $trainingContainer.find('[name="time"]');
+      const $timeInputDefault = $trainingContainer.find('[name="time_default"]');
+      const $buyBtn = $trainingContainer.find('.btn-buy-training');
+      const $noTime = $trainingContainer.find('.no_time_select');
+
       if (val === 'live_video') {
         $format.removeClass('hidden');
-        $dates.removeClass('hidden');
+        $rowDates.removeClass('hidden');
+        $rowDuration.removeClass('hidden');
+        $timeInput.val($timeSelect.val());
+        if ($noTime.length) {
+          $buyBtn.addClass('hidden');
+        }
       } else {
         $format.addClass('hidden');
-        $dates.addClass('hidden');
+        $rowDates.addClass('hidden');
+        $rowDuration.addClass('hidden');
+        $timeInput.val($timeInputDefault.val());
+        $buyBtn.removeClass('hidden');
+      }
+      $fieldTrainingTypeIdOfForm.val(val);
+      const $selectOption = $(e.target).find('option').eq(clickedIndex);
+      const costValue = $selectOption.data('cost');
+      $cost.text(costValue);
+
+      const trainingUrlValue = $selectOption.data('url');
+      $trainingInput.val(trainingUrlValue);
+    });
+
+    // handle on date change
+    $(document).on('change', '[name="time_select"]', function () {
+      const val = this.value;
+      const $trainingContainer = $(this).closest('.training-container');
+      const $fieldDateOfForm = $trainingContainer.find('[name="time"]');
+      if ($fieldDateOfForm) {
+        $fieldDateOfForm.val(val);
       }
     });
   }

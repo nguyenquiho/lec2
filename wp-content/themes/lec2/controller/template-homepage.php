@@ -6,13 +6,13 @@
 $singlePage         = new \App\Services\Page\Single();
 $data               = $singlePage->execute();
 $newFeedPosts       = $data['custom_data']['news_feed']['new_feed_posts'] ?? [];
-$highLightList      = $data['custom_data']['highlight_list']['highlight_list'] ?? [];
+$highLightList      =  new \App\Services\Product\ListProducts();
 $videoList          = $data['custom_data']['video'] ?? [];
 $trainingTypeList   = $data['custom_data']['training_types']['training_list'] ?? [];
 
 $highLightItems =  $videoItems = [];
 
-foreach ($highLightList as $item){
+foreach ($highLightList->execute() as $item){
     $highLightItems[] = apply_filters("modify_post_type", $item);
 }
 

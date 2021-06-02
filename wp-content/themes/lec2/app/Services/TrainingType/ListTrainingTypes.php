@@ -21,11 +21,12 @@ use App\Services\AbstractService;
 class ListTrainingTypes extends AbstractService
 {
 
-    protected  $query = [
+    protected $query = [
         'post_type'         => 'training_type',
         'posts_per_page'    => 10,
         'orderby'           => 'post_title',
         'order'             => 'asc',
+        'post_status'       => 'publish',
     ];
 
     /**
@@ -40,12 +41,31 @@ class ListTrainingTypes extends AbstractService
         $objs = query_posts($this->query);
         $returnData = [];
 
-        if(is_array($objs) && count($objs) > 0){
-            foreach ($objs as $obj){
+        if (is_array($objs) && count($objs) > 0) {
+            foreach ($objs as $obj) {
                 $returnData[] = $this->parseData($obj);
             }
         }
         wp_reset_postdata();
+
         return $returnData;
+    }
+
+    /*
+     * Get list training Type for filtering in header
+     * */
+    public function executeFilter()
+    {
+        $data = array();
+        $trainingTypes = get_posts($this->query);
+
+        foreach( $trainingTypes as $type ) {
+            $data[] = array(
+                "label" => $type->post_title,
+                "value" => $type->ID
+            );
+        }
+
+        return $data;
     }
 }

@@ -14,7 +14,7 @@ use App\Services\EmailTemplates\RequestACallForm;
 use App\Services\Helper;
 
 /**
- * Class SendContactEmail - Send contact email
+ * Class sendRequestACall - Send contact email
  *
  * @package App\Components\Hooks\Ajax\Classes
  */
@@ -26,34 +26,19 @@ class sendRequestACall extends AbstractAjax
      * Create an application
      */
     public function sendRequestACall(){
-        $sendRequestACall = new RequestACallForm();
-        $validation = new RequestACall();
-        $data = Helper::stripTagArray($_POST);
-        $result = $validation->setRequest($data)->validate();
-        if($result->getResult()){
-            $isSent =  $sendRequestACall->setData($data)->execute();
-            if($isSent){
-                wp_send_json(array(
-                    'status'    => true,
-                    'message'   => __('Your request was sent successfully','lec2_text_domain')
-                ));
-            }
-            else{
-                wp_send_json(array(
-                    'status'    => false,
-                    'message'   => __('Your request could not be sent','lec2_text_domain')
-                ));
-            }
+        $sendRequestACall   = new RequestACallForm();
+        $validation         = new RequestACall();
+        $data               = Helper::stripTagArray($_POST);
+        $result             = $validation->setRequest($data)->validate();
 
-        }
-        else{
+        if ($result->getResult()) {
+            $sendRequestACall->setData($data)->execute();
+        } else {
             wp_send_json(array(
                 'status'            => $result->getResult(),
                 'failure_key'       => $result->getFailureKey(),
                 'message'           => __($result->getMessage(),'lec2_text_domain')
             ));
         }
-
-
     }
 }

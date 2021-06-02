@@ -113,28 +113,4 @@ class Helper
         return $data;
     }
 
-    /**
-     * merge data for 2 arrays with our logic
-     *
-     * @param $data
-     * @return array
-     */
-    public static function mergeArray($array1, $array2){
-        if (!is_array($array1) || !is_array($array2))
-            return "input data must be arrays";
-
-        $new_array = array(); //has data(set) don't has data(default)
-        foreach ($array1 as $key => $var) {
-            if (is_array($array1[$key]) && is_array($array2[$key])) {
-                $new_array[$key] = Helper::mergeArray($array1[$key], $array2[$key]);
-            } else {
-                $check_data = $array2[$key];
-                $new_array[$key] = $array1[$key];
-                if ($check_data !== NULL && $check_data !== FALSE && $check_data !== "") {
-                    $new_array[$key] = $check_data;
-                }
-            }
-        }
-        return $new_array;
-    }
 }

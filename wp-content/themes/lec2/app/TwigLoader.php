@@ -34,10 +34,10 @@ class TwigLoader
     public static function load($view, $data, $isBackend = true){
 
         $twig = null;
-        if($isBackend){
+        if ($isBackend) {
             $twig = new Twig();
         }
-        else{
+        else {
             $twig = new FrontEndTwig();
         }
 
@@ -55,13 +55,11 @@ class TwigLoader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public static function render($view, $data = [], $isBackend = true){
-
-        if(isset($_GET['dump']) && WP_DEBUG){
+    public static function render($view, $data = [], $isBackend = true) {
+        if (isset($_GET['dump']) && WP_DEBUG) {
             echo self::load('/commons/debugger.html.twig',$data);
         }
-        echo self::load($view,$data, $isBackend);
 
-
+        echo self::load($view, $data, $isBackend);
     }
 }

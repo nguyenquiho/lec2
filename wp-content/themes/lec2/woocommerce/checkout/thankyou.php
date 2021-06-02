@@ -46,9 +46,10 @@ defined( 'ABSPATH' ) || exit;
 			</p>
 
 		<?php else : ?>
-			<h2>ORDER CONFIRMATION</h2>
-			<p><?php echo $order->get_billing_first_name(); ?>, thank you for your order!</p>
-			<p>You will shortly receive an email with further information about your order!</p>
+
+            <h2>REQUEST CONFIRMATION</h2>
+            <p><?php echo $order->get_billing_first_name(); ?>, thank you for your request !</p>
+            <p>We have received your request and will get in contact with you within 5 working days.</p>
 
 		<?php endif; ?>
 
@@ -57,9 +58,9 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php else : ?>
 
-		<h2>ORDER CONFIRMATION</h2>
-		<p><?php echo $order->get_billing_first_name(); ?>, thank you for your order!</p>
-		<p>You will shortly receive an email with further information about your order!</p>
+		<h2>REQUEST CONFIRMATION</h2>
+		<p><?php echo $order->get_billing_first_name(); ?>, thank you for your request !</p>
+		<p>We have received your request and will get in contact with you within 5 working days.</p>
 
 	<?php endif; ?>
 

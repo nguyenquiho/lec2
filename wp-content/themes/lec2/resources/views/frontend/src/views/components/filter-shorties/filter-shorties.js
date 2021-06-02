@@ -23,9 +23,9 @@ class FilterShorties extends AbstractController {
 
     this.$FilterBlock = $('.filter-shorties-form');
     this.$FilterForm = this.$FilterBlock.find('form');
-    this.formData = { posts_per_page: 4 };
+    this.formData = { posts_per_page: 10 };
 
-    this.loadTraningListShorties(4);
+    this.loadTraningListShorties(10);
     this.initFilterForm();
     this.handlePagination();
   }
@@ -43,16 +43,21 @@ class FilterShorties extends AbstractController {
         };
       },
       onSuccess: async ({ data, form }) => {
+        data.page = 1;
         this.loadTraningListShorties(data);
       },
     });
   }
 
   async loadTraningListShorties(formData) {
-    const { $FilterForm } = this;
+    const { $FilterForm, $FilterBlock } = this;
+    const $courseList = $('#shortiesForm .course-item-listing');
+    const $noResult = $('.no-result');
 
-    $FilterForm.loading(true);
-    this.$FilterBlock.addClass('loading');
+
+    $FilterBlock.loading(true);
+    // $FilterForm.loading(true);
+    // this.$FilterBlock.addClass('loading');
 
     this.formData = {
       ...this.formData,
@@ -63,8 +68,6 @@ class FilterShorties extends AbstractController {
       const resp = await AjaxService.getInstance().sendShortiesCourse(this.formData, {
         noMessage: true,
       });
-
-      console.log('resp short', resp);
 
       if (resp) {
         this.$scope.courseList = {
@@ -87,15 +90,25 @@ class FilterShorties extends AbstractController {
           }
           // disable next button
           if (Number(resp.items.current_page) === Number(resp.items.total_pages)) {
-            $pagination.find('.page-num--next').addClass('disabled');
+            $pagination.find('.page-num--next, .page-num--current').addClass('disabled');
           }
+        }
+
+        $noResult.remove();
+
+        if (resp.items.total_pages === 0) {
+          $courseList.append(`<p class="no-result">${resp.items.message}</p>`);
+        } else {
+          $noResult.remove();
         }
       }
     } catch (error) {
       console.error(error);
     }
-    $FilterForm.loading(false);
-    this.$FilterBlock.removeClass('loading');
+
+    $FilterBlock.loading(false);
+    // $FilterForm.loading(false);
+    // this.$FilterBlock.removeClass('loading');
   }
 
   handlePagination() {

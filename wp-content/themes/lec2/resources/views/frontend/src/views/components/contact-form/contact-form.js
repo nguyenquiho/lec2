@@ -36,6 +36,7 @@ class ContactForm extends AbstractComponent {
     $contactForm.formValidator({
       schema: (yup) => {
         return {
+          salutation: yup.string().required(),
           firstname: yup.string().required(),
           lastname: yup.string().required(),
           street: yup.string().required(),

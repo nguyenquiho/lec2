@@ -4,6 +4,7 @@ import partnerData from './MockData/partners.json';
 import posts from './MockData/posts.json';
 import coursesList from './MockData/coursesList.json';
 import shortiesList from './MockData/shortiesList.json';
+import scheduleList from './MockData/scheduleList.json';
 
 const ACTIONS = {
   sendContact: {
@@ -13,6 +14,11 @@ const ACTIONS = {
   sendRequestACall: {
     method: 'POST',
     actionName: 'send_request_a_call',
+  },
+
+  sendRequestEmail: {
+    method: 'POST',
+    actionName: 'send_request_email',
   },
   sendPayment: {
     method: 'POST',
@@ -39,6 +45,17 @@ const ACTIONS = {
     mocks(...params) {
       return {
         ...shortiesList,
+        show_load_more: true,
+      };
+    },
+  },
+  sendScheduleCourse: {
+    method: 'POST',
+    actionName: 'send_schedule_course',
+    // Mock ajax
+    mocks(...params) {
+      return {
+        ...scheduleList,
         show_load_more: true,
       };
     },
@@ -119,9 +136,17 @@ class AjaxService extends AbstractAjax {
     });
   };
 
-  sendWriteUsContact = (formData, options) => {
+  sendScheduleCourse = (formData, options) => {
     return this._doSendRequest({
-      action: ACTIONS.sendWriteUsContact,
+      action: ACTIONS.sendScheduleCourse,
+      data: formData,
+      ...options,
+    });
+  };
+
+  sendRequestEmail = (formData, options) => {
+    return this._doSendRequest({
+      action: ACTIONS.sendRequestEmail,
       data: formData,
       ...options,
     });

@@ -23,6 +23,11 @@
   &:last-child {
     border-bottom: 0;
   }
+  &-listing {
+    .no-result {
+      text-align: center;
+    }
+  }
   &-content {
     display: flex;
     justify-content: space-between;
@@ -71,6 +76,16 @@
     &--current {
       margin: 0 24px;
       color: $info;
+      &.disabled {
+        color: #c7c7c7;
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+      em {
+        color: #c7c7c7;
+      }
     }
   }
 }

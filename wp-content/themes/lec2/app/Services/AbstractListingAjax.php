@@ -79,4 +79,34 @@ abstract class AbstractListingAjax extends AbstractListingObjects
             'show_load_more' => $isShowLoadMore,
         ];
     }
+
+    /**
+     * Override parent's method for ajax of load more 4 items of News Listing
+     *
+     * @param $page
+     * @return array
+     */
+    public function executeNewsData($page)
+    {
+        $data = parent::executeNewsData($page);
+        global $wp_query;
+        if(empty($this->postsPerPage)){
+            $this->postsPerPage = get_option( 'posts_per_page' );
+        }
+        $totalItems = $wp_query->found_posts;
+        $currentPage = $this->query['paged'];
+
+        $this->totalPages = ceil($totalItems / $this->postsPerPage);
+        $isShowLoadMore = ($currentPage < $this->totalPages) ? true : false;
+        $nextPage = $isShowLoadMore ? $currentPage + 1 : $this->totalPages;
+        return [
+            'data'           => $data,
+            'posts_per_page' => $this->postsPerPage,
+            'current_page'   => $currentPage,
+            'next_page'      => $nextPage,
+            'total_pages'    => $this->totalPages,
+            'total_posts'    => $totalItems,
+            'show_load_more' => $isShowLoadMore,
+        ];
+    }
 }

@@ -6,8 +6,7 @@
   width: 40px;
   height: 40px;
   color: #81A3BE;
-  right: 30px;
-  bottom: 30px;
+  right: 30px;  
   border: 1px solid #81A3BE;;
   border-radius: 4px;
   display: flex;
@@ -18,16 +17,7 @@
   background-size: 14px;
   background-repeat: no-repeat;
   background-position: center;
-  transition: all 0.25s ease-out;
-
-  @include mobile() {
-    right: 15px;
-    bottom: 255px;
-  }
-
-  @include tablet() {
-    bottom: 220px;
-  }
+  transition: all 0.25s ease-out;  
 
   &:hover {
     opacity: 0.68;
@@ -39,4 +29,15 @@
     pointer-events: none;
   }
 
+  @include desktop() {
+    bottom: 30px !important;
+  }
+
+  @include tablet-down() {
+    right: 15px;
+  }
+
+  @include mobile-small{
+    right: 10px;
+  }
 }

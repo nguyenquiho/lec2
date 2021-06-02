@@ -37,7 +37,8 @@
     }
   }
   &-type-list {
-    // display: flex;
+    display: flex;
+
   }
   &-type-title {
     color: $color-dark;
@@ -87,12 +88,12 @@
     font-size: 1.8rem;
     &-content--richtext {
       ul {
-        padding-left: 0;
-        list-style: none;
+        padding-left: 18px;
+        list-style-image: url('~@/assets/images/list-circle.png');
         li {
           margin-bottom: 21px;
-          background: url('~@/assets/images/list-circle.png') no-repeat left center;
-          padding-left: 20px;
+          // background: url('~@/assets/images/list-circle.png') no-repeat left top;
+          // padding-left: 20px;
         }
       }
     }
@@ -103,6 +104,11 @@
       margin:0 -12px 24px;
       &.hidden {
         display: none !important;
+      }
+      &--date {
+        .right {
+          color: red;
+        }
       }
     }
     &-content {
@@ -137,13 +143,29 @@
   }
 }
 
+// .time-expired + form {
+//   display: none !important;
+// }
+
+// .empty-execution ~ form {
+//   display: none !important;
+// }
+
+// .empty-execution + button {
+//   display: none;
+// }
+
+.slick-initialized {
+  display: block;
+}
+
 .agenda-block {
-  padding-top: 57px;
   background-color: $color-white;
   .container {
     display: none;
     &.show {
       display: block;
+      padding-top: 57px;
     }
   }
   .card {
@@ -191,12 +213,13 @@
   }
   ul {
     padding-left: 0;
-    list-style: none;
+    padding-left: 18px;
+    list-style-image: url('~@/assets/images/list-circle.png');
     margin-bottom: 36px;
     li {
       margin-bottom: 20px;
-      background: url('~@/assets/images/list-circle.png') no-repeat left center;
-      padding-left: 20px;
+      // background: url('~@/assets/images/list-circle.png') no-repeat left center;
+      // padding-left: 20px;
     }
     & + h5 {
       margin-top: -12px;
@@ -204,29 +227,6 @@
   }
   dt {
     font-weight: 500;
-  }
-}
-
-#training-type-3 {
-  .training-body-row--date {
-    display: none;
-  }
-}
-
-#training-type-4 {
-  .training-body-row--cost {
-    display: none;
-  }
-}
-
-@include desktop() {
-  .training-type-list {
-    .slick-track .move-item-to-last {
-      order: 10;
-    }
-    .slick-track .move-item-to-first {
-      order: 0;
-    }
   }
 }
 
@@ -343,7 +343,9 @@
     }
   }
   .agenda-block {
-    padding-top: 33px;
+    &.show {
+      padding-top: 33px;
+    }
     h3 {
       margin-bottom: 20px;
     }

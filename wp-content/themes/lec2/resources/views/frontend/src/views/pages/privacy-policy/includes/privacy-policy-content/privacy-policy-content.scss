@@ -1,7 +1,7 @@
 @import "~@/scss/base";
 
 .text-content {
-  margin-bottom: 87px;
+  margin-bottom: 50px;
   p {
     font-size: 1.8rem;
     line-height: 30px;
@@ -25,7 +25,8 @@
     p {
       font-size: 1.4rem;
       margin-bottom: 20px;
-      line-height: 19.07px
+      line-height: 19.07px;
+      word-break: break-word;
     }
     h5 {
       font-size: 1.4rem;

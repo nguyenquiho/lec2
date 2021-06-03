@@ -50,10 +50,10 @@ class ListProductsAjax extends AbstractListingAjax
             $_GET['date_to'] = str_replace(".","-",$_GET['date_to']);
             $_GET['date_to'] = str_replace(":","-",$_GET['date_to']);
 
-            $query = "SELECT *,REPLACE(REPLACE(REPLACE(`meta_key`,'training_types_',''),'_execution_of_training_live_course_dates_0_date',''),'_execution_of_training_live_course_dates_1_date','') as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value`BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}')";
+            $query = "SELECT *,LEFT(REPLACE(`meta_key`,'training_types_','') , 1) as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value` BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}')";
 
             $data = $wpdb->get_results( $query );
-            debug($data,true);
+
             $objs = array();
             
             foreach($data as $d){

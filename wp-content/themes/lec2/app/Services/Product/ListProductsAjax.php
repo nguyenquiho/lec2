@@ -28,9 +28,9 @@ class ListProductsAjax extends AbstractListingAjax
             $costTo = $_GET['cost_to'];
             if(!isset($_GET['cost_from'])){
                 $costFrom = 0;
-            }   
+            }
             $compare = "BETWEEN $costFrom AND $costTo";
-            
+
             $query = <<<EOT
             SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt1 ON p.id = mt1.post_id LEFT JOIN wp_postmeta AS mt2 ON mt1.post_id = mt2.post_id
             WHERE
@@ -50,25 +50,32 @@ class ListProductsAjax extends AbstractListingAjax
             $_GET['date_to'] = str_replace(".","-",$_GET['date_to']);
             $_GET['date_to'] = str_replace(":","-",$_GET['date_to']);
 
-            $args = array(
-                'numberposts'   =>  -1,
-                'post_type'   =>  'product',
-                'meta_query'   =>  array(
-                    'relation'  =>  'AND',
-                    array(
-                        'key'   =>  'training_types_&&_execution_of_training_live_course_dates_&&_date',
-                        'compare'   =>  'BETWEEN',
-                        'value' =>  array($_GET['date_from'],$_GET['date_to']),
-                    ),
-                    array(
-                        'key'   =>  'training_types_&&_execution_of_training_has_live_course',
-                        'compare'   =>  '=',
-                        'value' =>  1, 
-                    )
-                )
-            );
+            $query = "SELECT *,REPLACE(REPLACE(`meta_key`,'training_types_',''),'_execution_of_training_live_course_dates_0_date','') as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value`BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}') ";
+            // debug($query,true);
+            $result = $wpdb->get_results( $query );
+            $data = array();
+            foreach($result as $res){
+                if(strlen($res->ordinal) == 1 ){
+                    $data[] = $res;
+                }
+            }
 
-            $objs = query_posts($args);
+            $objs = [];
+            foreach($data as $d){
+                $query = <<<EOT
+                SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt ON p.id = mt.post_id
+                WHERE
+                    post_type = 'product'
+                    AND post_status = 'publish'
+                    AND ID = ('{$d->post_id}')
+                    AND mt.meta_key = 'training_types_{$d->ordinal}_execution_of_training_has_live_course'
+                    AND mt.meta_value = 1
+                EOT;
+                $products = $wpdb->get_results( $query );
+                if(!empty($products)){
+                    array_push($objs,$products);
+                }
+            }
 
         }else{
             $objs = [];
@@ -90,4 +97,4 @@ class ListProductsAjax extends AbstractListingAjax
 }
 
 
-// http://lec2.local/wp-admin/admin-ajax.php?action=get_products&date_from=2021.05.25&date_to=2021.06.17
+// http://lec2.local/wp-admin/admin-ajax.php?action=get_products&date_from=2021-05-25&date_to=2021-06-17

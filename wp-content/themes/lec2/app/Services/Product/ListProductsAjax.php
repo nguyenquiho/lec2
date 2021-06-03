@@ -28,9 +28,9 @@ class ListProductsAjax extends AbstractListingAjax
             $costTo = $_GET['cost_to'];
             if(!isset($_GET['cost_from'])){
                 $costFrom = 0;
-            }
+            }   
             $compare = "BETWEEN $costFrom AND $costTo";
-
+            
             $query = <<<EOT
             SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt1 ON p.id = mt1.post_id LEFT JOIN wp_postmeta AS mt2 ON mt1.post_id = mt2.post_id
             WHERE
@@ -50,23 +50,16 @@ class ListProductsAjax extends AbstractListingAjax
             $_GET['date_to'] = str_replace(".","-",$_GET['date_to']);
             $_GET['date_to'] = str_replace(":","-",$_GET['date_to']);
 
-            $query = "SELECT *,REPLACE(REPLACE(`meta_key`,'training_types_',''),'_execution_of_training_live_course_dates_0_date','') as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value`BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}') ";
+            $query = "SELECT *,REPLACE(REPLACE(REPLACE(`meta_key`,'training_types_',''),'_execution_of_training_live_course_dates_0_date',''),'_execution_of_training_live_course_dates_1_date','') as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value`BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}') GROUP BY `post_id`";
 
-            $result = $wpdb->get_results( $query );
-            $data = array();
-            foreach($result as $res){
-                if(strlen($res->ordinal) == 1 ){
-                    $data[] = $res;
-                }
-            }
-
+            $data = $wpdb->get_results( $query );
             $objs = [];
             foreach($data as $d){
                 $query = <<<EOT
                 SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt ON p.id = mt.post_id
                 WHERE
-                    post_type = 'product'
-                    AND post_status = 'publish'
+                    post_type = 'product' 
+                    AND post_status = 'publish' 
                     AND ID = ('{$d->post_id}')
                     AND mt.meta_key = 'training_types_{$d->ordinal}_execution_of_training_has_live_course'
                     AND mt.meta_value = 1
@@ -74,7 +67,7 @@ class ListProductsAjax extends AbstractListingAjax
                 $products = $wpdb->get_results( $query );
                 if(!empty($products)){
                     array_push($objs,$products);
-                }
+                }  
             }
 
         }else{

@@ -29,6 +29,18 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
+// add_action('woocommerce_checkout_create_order', 'check_buy_as_gift_and_create_coupon', 10, 1);
+// function check_buy_as_gift_and_create_coupon( $order_id ) {
+    
+    /**
+    * Create a coupon programatically
+    */
+
+    
+    
+// } 
+
 ?>
 
 <div dir="ltr" style="background-color:<?php echo \App\Services\EmailTemplates\GetBaseSettingEmail::getBackGroundColor() ?>;margin:0;padding:70px 0;width:100%">
@@ -71,9 +83,58 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                                                         <?php
                                                         $order_id = THWCFD_Utils::get_order_id($order);
+                                                        // debug($order,true);
                                                         $room_reservation = get_post_meta($order_id);
                                                         $before = '';
                                                         $after  = '';
+
+                                                        // $o_id = json_decode($order_id);
+                                                        // $id = $order->items['line_items'];
+                                                        $items = $order->get_items();
+                                                        foreach ( $items as $item ) {
+                                                            $product_id = $item->get_product_id();
+                                                            break;
+                                                        }
+                                                    
+                                                        global $wpdb, $wp_query;
+                                                        $query = "SELECT `meta_value` FROM `wp_postmeta` WHERE `meta_key` LIKE 'buy_as_gift' AND `post_id` = $product_id";
+                                                        $buy_as_gift = $wpdb->get_results( $query );
+                                                        $buy_as_gift = $buy_as_gift[0]->meta_value;
+                                                    
+                                                        // $to = 'quyhonguyen@gmail.com';
+                                                        // $subject = 'The subject';
+                                                        // $body = 'The email body content';
+                                                        // $headers = array('Content-Type: text/html; charset=UTF-8');
+                                                        
+                                                        // wp_mail( $to, $subject, $body, $headers );
+                                                    
+                                                        if($buy_as_gift == 1){
+                                                            $rand_code = rand(0,99999);
+                                                            $coupon_code = "GIFTCODE".$rand_code; // Code
+                                                            $amount = '100'; // Amount
+                                                            $discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+                                                    
+                                                            $coupon = array(
+                                                            'post_title' => "$coupon_code",
+                                                            'post_content' => '',
+                                                            'post_status' => 'publish',
+                                                            'post_author' => 1,
+                                                            'post_type' => 'shop_coupon');
+                                                    
+                                                            $new_coupon_id = wp_insert_post( $coupon );
+                                                    
+                                                            // Add meta
+                                                            update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+                                                            update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+                                                            update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+                                                            update_post_meta( $new_coupon_id, 'product_ids', $product_id );
+                                                            update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+                                                            update_post_meta( $new_coupon_id, 'usage_limit', '1' );
+                                                            update_post_meta( $new_coupon_id, 'expiry_date', '' );
+                                                            update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+                                                            update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+                                                        }
+
                                                         echo '<h3>'.wp_kses_post( $before . sprintf( __( '[Order #%s]', 'woocommerce' ) . $after . ' (<time datetime="%s">%s</time>)', $order->get_order_number(), $order->get_date_created()->format( 'c' ), wc_format_datetime( $order->get_date_created() ) ) ).'</h3>';
 
                                                         echo '<p><strong>'.__('Course').': </strong>'.get_post_meta($order_id,'order_custom_training_name',true).'</p>';
@@ -81,7 +142,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                         echo '<p><strong>'.__('URL').': </strong>'.get_post_meta($order_id,'order_custom_url',true).'</p>';
                                                         echo '<p><strong>'.__('Date').': </strong>'.get_post_meta($order_id,'order_custom_date',true).'</p>';
                                                         echo '<p><strong>'.__('Fee').': </strong>'.get_post_meta($order_id,'order_custom_price',true).'</p>';
-                                                        echo '<p><strong>'.__('Type').': </strong>'.get_post_meta($order_id,'order_custom_training_type',true).'</p>';
+                                                        echo '<p><strong>'.__('Type').': </strong>'.get_post_meta($order_id,'order_custom_training_type',true).'</p>';?>
+                                                        <?php if($buy_as_gift == 1){
+                                                        echo '<p><strong>'.__('Coupon').': </strong>'.$coupon_code.'</p>';
+                                                        }
                                                         ?>
                                                         <h3>Course participants</h3>
                                                         <?php

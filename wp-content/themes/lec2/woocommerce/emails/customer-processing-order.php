@@ -88,8 +88,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                         $before = '';
                                                         $after  = '';
 
-                                                        // $o_id = json_decode($order_id);
-                                                        // $id = $order->items['line_items'];
                                                         $items = $order->get_items();
                                                         foreach ( $items as $item ) {
                                                             $product_id = $item->get_product_id();
@@ -100,13 +98,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                         $query = "SELECT `meta_value` FROM `wp_postmeta` WHERE `meta_key` LIKE 'buy_as_gift' AND `post_id` = $product_id";
                                                         $buy_as_gift = $wpdb->get_results( $query );
                                                         $buy_as_gift = $buy_as_gift[0]->meta_value;
-                                                    
-                                                        // $to = 'quyhonguyen@gmail.com';
-                                                        // $subject = 'The subject';
-                                                        // $body = 'The email body content';
-                                                        // $headers = array('Content-Type: text/html; charset=UTF-8');
-                                                        
-                                                        // wp_mail( $to, $subject, $body, $headers );
                                                     
                                                         if($buy_as_gift == 1){
                                                             $rand_code = rand(0,99999);

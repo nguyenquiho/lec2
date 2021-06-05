@@ -93,13 +93,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                             $product_id = $item->get_product_id();
                                                             break;
                                                         }
-                                                    
-                                                        global $wpdb, $wp_query;
-                                                        $query = "SELECT `meta_value` FROM `wp_postmeta` WHERE `meta_key` LIKE 'buy_as_gift' AND `post_id` = $product_id";
-                                                        $buy_as_gift = $wpdb->get_results( $query );
-                                                        $buy_as_gift = $buy_as_gift[0]->meta_value;
-                                                    
-                                                        if($buy_as_gift == 1){
+
+                                                        $buy_as_gift= get_post_meta($product_id,'buy_as_gift',true);
+
+                                                        //check buy as gift Front-end
+                                                        $buy_as_gift_frontend = get_post_meta( $order_id, 'buy_as_gift_frontend', true ) ?? '';
+                                                        
+                                                        if($buy_as_gift == 1 || $buy_as_gift_frontend == 1){
                                                             $rand_code = rand(0,99999);
                                                             $coupon_code = "GIFTCODE".$rand_code; // Code
                                                             $amount = '100'; // Amount
@@ -113,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                             'post_type' => 'shop_coupon');
                                                     
                                                             $new_coupon_id = wp_insert_post( $coupon );
-                                                    
+                                                                
                                                             // Add meta
                                                             update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
                                                             update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
@@ -121,7 +121,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                             update_post_meta( $new_coupon_id, 'product_ids', $product_id );
                                                             update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
                                                             update_post_meta( $new_coupon_id, 'usage_limit', '1' );
-                                                            update_post_meta( $new_coupon_id, 'expiry_date', '' );
+                                                            update_post_meta( $new_coupon_id, 'usage_limit_per_user', '1');
+                                                            update_post_meta( $new_coupon_id, 'expiry_date', date('Y-m-d', strtotime(date('Y-m-d'). ' + 30 days')));
                                                             update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
                                                             update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
                                                         }
@@ -134,7 +135,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                         echo '<p><strong>'.__('Date').': </strong>'.get_post_meta($order_id,'order_custom_date',true).'</p>';
                                                         echo '<p><strong>'.__('Fee').': </strong>'.get_post_meta($order_id,'order_custom_price',true).'</p>';
                                                         echo '<p><strong>'.__('Type').': </strong>'.get_post_meta($order_id,'order_custom_training_type',true).'</p>';?>
-                                                        <?php if($buy_as_gift == 1){
+                                                        <?php if($buy_as_gift == 1 || $buy_as_gift_frontend == 1){
                                                         echo '<p><strong>'.__('Coupon').': </strong>'.$coupon_code.'</p>';
                                                         }
                                                         ?>

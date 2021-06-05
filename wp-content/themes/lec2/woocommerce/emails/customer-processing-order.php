@@ -29,18 +29,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
-// add_action('woocommerce_checkout_create_order', 'check_buy_as_gift_and_create_coupon', 10, 1);
-// function check_buy_as_gift_and_create_coupon( $order_id ) {
-    
-    /**
-    * Create a coupon programatically
-    */
-
-    
-    
-// } 
-
 ?>
 
 <div dir="ltr" style="background-color:<?php echo \App\Services\EmailTemplates\GetBaseSettingEmail::getBackGroundColor() ?>;margin:0;padding:70px 0;width:100%">

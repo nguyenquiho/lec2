@@ -159,6 +159,9 @@ class Lec_Product_Type_Plugin {
         if ( ! empty( $_POST['in_house_training'] ) ) {
             update_post_meta( $order_id, 'in_house_training', wc_clean( $_POST['in_house_training'] ) );
         }
+        if ( ! empty( $_POST['buy_as_gift_frontend'] ) ) {
+            update_post_meta( $order_id, 'buy_as_gift_frontend', wc_clean( $_POST['buy_as_gift_frontend'] ) );
+        }
         if ( ! empty( $_POST['room_reservation'] ) ) {
             update_post_meta( $order_id, 'room_reservation', wc_clean( $_POST['room_reservation'] ) );
         }

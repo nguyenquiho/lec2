@@ -26,6 +26,7 @@ use App\Components\Hooks\Website\Actions;
 use App\Components\Hooks\Website\Filters;
 use App\Components\Hooks\Website\TemplateHierarchies;
 use App\Components\Hooks\Ajax\Classes\GetProducts;
+use App\Components\Hooks\Ajax\Classes\GetLiveCourseDates;
 
 /**
  * All actions + filters have been register here.
@@ -96,6 +97,7 @@ class RegisterHooks implements ComponentInterface
             new GetTrainingForSchedule(),
             new AddToCart(),
             new GetProducts(),
+            new GetLiveCourseDates(),
         ];
     }
 }

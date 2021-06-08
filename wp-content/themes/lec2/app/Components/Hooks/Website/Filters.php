@@ -268,6 +268,7 @@ class Filters extends AbstractFilter
             'label'   => __('Room reservations in the conference hotel are desirable.'),
         ), $checkout->get_value( 'room_reservation' ));
 
+ 
         echo '<div class="room-reservation"><h4>Room reservation</h4>';
         echo '<div role="wrapper" class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">';
         woocommerce_form_field( 'arrival_date', array(
@@ -293,6 +294,11 @@ class Filters extends AbstractFilter
     }
 
     public function checkoutFieldsAfterTerm($checkout) {
+        woocommerce_form_field( 'buy_as_gift_frontend', array(
+            'type'          => 'checkbox',
+            'class'         => array('buy_as_gift_frontend form-row-wide'),
+            'label'   => __('Buy as gift'),
+        ), $checkout->get_value( 'buy_as_gift_frontend' ));
 //        woocommerce_form_field( 'subscribe_newsletter', array(
 //            'type'          => 'checkbox',
 //            'class'         => array('subscribe_newsletter form-row-wide'),

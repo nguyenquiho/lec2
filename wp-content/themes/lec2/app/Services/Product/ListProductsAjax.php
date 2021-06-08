@@ -20,6 +20,15 @@ use App\Services\AbstractListingAjax;
  */
 class ListProductsAjax extends AbstractListingAjax
 {
+    public function getTimeZone(){ ?>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        function createCookie(e,t,o){var i;if(o){var n=new Date;n.setTime(n.getTime()+24*o*60*60*1e3),i="; expires="+n.toGMTString()}else i="";url=window.location.href,document.cookie=escape(e)+"="+escape(t)+i+"; path="+url}$(document).ready(function(){createCookie("time_zone_client",Intl.DateTimeFormat().resolvedOptions().timeZone,"1")});
+        </script>
+        <?php
+        return $_COOKIE["time_zone_client"]; 
+    }
+
     public function execute()
     {
         global $wpdb, $wp_query;
@@ -42,52 +51,36 @@ class ListProductsAjax extends AbstractListingAjax
             EOT;
         }
         elseif(isset($_GET['date_from']) && isset($_GET['date_to'])){
-            $_GET['date_from'] = str_replace("/","-",$_GET['date_from']);
-            $_GET['date_from'] = str_replace(".","-",$_GET['date_from']);
-            $_GET['date_from'] = str_replace(":","-",$_GET['date_from']);
+            $time_zone_client = $this->getTimeZone();
+            $timezoneWPSetting = wp_timezone_string();
 
-            $_GET['date_to'] = str_replace("/","-",$_GET['date_to']);
-            $_GET['date_to'] = str_replace(".","-",$_GET['date_to']);
-            $_GET['date_to'] = str_replace(":","-",$_GET['date_to']);
+            if (strpos($timezoneWPSetting, '/') === false) {
+                $tz_offset = get_option('gmt_offset');
+                switch($tz_offset){
+                    case -12:   $timezoneWPSetting = 'Etc/GMT+12';break;
+                    case -11.5: $timezoneWPSetting = 'Etc/GMT+11.5';break;
+                    case -11:   $timezoneWPSetting = 'Etc/GMT+11';break;
+                    case 12.75: $timezoneWPSetting = 'Pacific/Chatham';break;
+                    case 13:    $timezoneWPSetting = 'Pacific/Chatham';break;
+                    case 13.75: $timezoneWPSetting = 'Pacific/Chatham';break;
+                    case 14:    $timezoneWPSetting = 'Pacific/Kiritimati';break;
+                    default:    $timezoneWPSetting = timezone_name_from_abbr("", $tz_offset * 3600, false);
+                }
+            }
 
-            // $query = "SELECT *,LEFT(REPLACE(`meta_key`,'training_types_','') , 1) as ordinal FROM wp_postmeta WHERE (`meta_key` LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' ) AND ( `meta_value` BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}')";
+            $date_from = date_create($_GET['date_from'], timezone_open($time_zone_client));
+            date_timezone_set($date_from, timezone_open($timezoneWPSetting));
+            $date_from = $date_from->format('Y-m-d H:i:s');
 
-            // $data = $wpdb->get_results( $query );
-
-            // $objs = array();
-            
-            // foreach($data as $d){
-            //     $exist = 0;
-            //     foreach($objs as $o){
-            //         if($o->ID == $d->post_id){
-            //             $exist ++;
-            //         }
-            //     }
-            //     if($exist == 0){
-            //         $query = <<<EOT
-            //         SELECT * FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt ON p.id = mt.post_id
-            //         WHERE
-            //             post_type = 'product' 
-            //             AND post_status = 'publish' 
-            //             AND ID = ('{$d->post_id}')
-            //             AND mt.meta_key = 'training_types_{$d->ordinal}_execution_of_training_has_live_course'
-            //             AND mt.meta_value = 1
-            //         EOT;
-            //         $products = $wpdb->get_results( $query );
-
-            //         if(!empty($products)){
-            //             array_push($objs,$products[0]);
-            //         }
-            //     }  
-            // }
-
-
+            $date_to = date_create($_GET['date_to'], timezone_open($time_zone_client));
+            date_timezone_set($date_to, timezone_open($timezoneWPSetting));
+            $date_to = $date_to->format('Y-m-d H:i:s');
 
             $query = <<<EOT
             SELECT p.ID FROM wp_posts AS p LEFT JOIN wp_postmeta AS mt1 ON ( p.ID = mt1.post_id ) 
             LEFT JOIN wp_postmeta AS mt2 ON ( mt1.post_id = mt2.post_id ) 
             WHERE ( ( mt1.meta_key LIKE 'training_types_%_execution_of_training_live_course_dates_%_date' 
-            AND mt1.meta_value BETWEEN '{$_GET['date_from']}' AND '{$_GET['date_to']}' ) 
+            AND mt1.meta_value BETWEEN '{$date_from}' AND '{$date_to}' ) 
             AND ( mt2.meta_key LIKE 'training_types_%_execution_of_training_has_live_course' 
             AND mt2.meta_value = '1' ) 
             AND (SUBSTRING_INDEX(mt1.meta_key,'_execution',1) = REPLACE(mt2.meta_key, '_execution_of_training_has_live_course', '')) ) 
@@ -95,7 +88,6 @@ class ListProductsAjax extends AbstractListingAjax
             GROUP BY p.ID
             EOT;
             $objs = $wpdb->get_results( $query );
-
 
         }else{
             $objs = [];
@@ -117,4 +109,4 @@ class ListProductsAjax extends AbstractListingAjax
 }
 
 
-// http://lec2.local/wp-admin/admin-ajax.php?action=get_products&date_from=2021-05-25&date_to=2021-06-17
+// http://lec2.local/wp-admin/admin-ajax.php?action=get_products&date_from=2021-05-24%2001:36:01&date_to=2021-06-17%2011:17:01

@@ -45,7 +45,7 @@ class SendOfferEmail extends AbstractAjax
                     'message' => __('Your contact email was sent successfully', 'lec2_text_domain'),
                     'message_class' => $isSent ? "updated notice notice-success" : "error",
                     'debug_message' => !$isSent ? $emailDebug->errors : [],
-                ));
+                )); 
             }
             else {
                 wp_send_json(array(

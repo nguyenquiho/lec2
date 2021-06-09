@@ -26,7 +26,7 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
         function createCookie(e,t,o){var i;if(o){var n=new Date;n.setTime(n.getTime()+24*o*60*60*1e3),i="; expires="+n.toGMTString()}else i="";url=window.location.href,document.cookie=escape(e)+"="+escape(t)+i+"; path="+url}$(document).ready(function(){createCookie("time_zone_client",Intl.DateTimeFormat().resolvedOptions().timeZone,"1")});
         </script>
         <?php
-        return $_COOKIE["time_zone_client"]; 
+        return $_COOKIE["time_zone_client"];
     }
 
     public function execute()
@@ -43,7 +43,7 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
                     case -11.5: $timezoneWPSetting = 'Etc/GMT+11.5';break;
                     case -11: $timezoneWPSetting = 'Etc/GMT+11';break;
                     case 12.75: $timezoneWPSetting = 'Pacific/Chatham';break;
-                    case 13: $timezoneWPSetting = 'Pacific/Chatham';break;
+                    case 13: $timezoneWPSetting = 'Pacific/Apia';break;
                     case 13.75: $timezoneWPSetting = 'Pacific/Chatham';break;
                     case 14: $timezoneWPSetting = 'Pacific/Kiritimati';break;
                     default: $timezoneWPSetting = timezone_name_from_abbr("", $tz_offset * 3600, false);
@@ -62,7 +62,7 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
             AND ( meta_value BETWEEN '{$date_from}' AND '{$date_to}' )
             EOT;
             $objs = $wpdb->get_results( $query );
-            debug($objs);
+
             foreach($objs as $obj){
                 $date = date_create($obj->meta_value, timezone_open($timezoneWPSetting));
                 date_timezone_set($date, timezone_open($time_zone_client));

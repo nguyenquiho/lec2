@@ -23,11 +23,38 @@ class GetProducts extends AbstractAjax
     /**
      * getMorePartner
      */
+
+    public function to_24_hour($datetime){
+      $datetime = str_replace("/","-",$datetime);
+      $date = substr($datetime, 0, 10);
+      $hours = substr($datetime, 11, 2);
+      $minutes = substr($datetime, 14, 2);
+      $seconds = '00';
+      $meridiem = (strtolower($meridiem)=='am') ? 'am' : 'pm';
+      return $date.date(' H:i:s', strtotime("{$hours}:{$minutes}:{$seconds} {$meridiem}"));
+    }
+
     public function getProducts(){
-    
+
       $products = new ListProductsAjax();
       $data = $products->execute();
-      // debug($data,true);
+
+      $time_zone_client = $products->getTimeZone();
+      $timezoneWPSetting = $products->getTimeZoneWPSetting();
+      foreach($data as $item_key=>$item_value){
+        foreach($item_value['custom_data']['training_types'] as $training_type_key=>$training_type_value){
+          $item_value['custom_data']['training_types'][$training_type_key]['execution_of_training']['live_course_dates'] = [];
+          foreach($training_type_value['execution_of_training']['live_course_dates'] as $key=>$value){
+            $new_date = $this->to_24_hour($value['date']);
+            $date = date_create($new_date, timezone_open($timezoneWPSetting));
+            date_timezone_set($date, timezone_open($time_zone_client));
+            $date = $date->format('d-m-Y H:i:s');
+            $item_value['custom_data']['training_types'][$training_type_key]['execution_of_training']['live_course_dates'][]['date'] = $date;
+          }
+        }
+        $data[$item_key] = $item_value;
+      }
+
     //get products filter by category ID
     //   $cat_ids = $_GET['cat_ids'];
     //   $cat_ids = explode(",", $cat_ids);
@@ -51,11 +78,11 @@ class GetProducts extends AbstractAjax
 
     //get products filter by category Name
   //   global $wpdb;
-  //   $term_ids=array(); 
-  //   $cat_Args="SELECT * FROM $wpdb->terms 
-  //   INNER JOIN `wp_term_taxonomy` 
+  //   $term_ids=array();
+  //   $cat_Args="SELECT * FROM $wpdb->terms
+  //   INNER JOIN `wp_term_taxonomy`
   //   ON `$wpdb->terms`.`term_id` = `wp_term_taxonomy`.`term_id`
-  //   WHERE `wp_terms`.`name` LIKE '%".$_REQUEST['cat_names']."%' 
+  //   WHERE `wp_terms`.`name` LIKE '%".$_REQUEST['cat_names']."%'
   //   AND `wp_term_taxonomy`.`taxonomy` = 'product_cat'";
   //   // die($cat_Args);
   //   $cats = $wpdb->get_results($cat_Args, OBJECT);
@@ -137,7 +164,7 @@ class GetProducts extends AbstractAjax
 
 
   // $products = query_posts($args);
-  
+
   // // debug($products,true);
 
 
@@ -180,9 +207,9 @@ class GetProducts extends AbstractAjax
       // }else{
       //   // $cost = (int) filter_var($_GET['cost'], FILTER_SANITIZE_NUMBER_INT);
       //   $cost = filter_var( $_GET['cost'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-      //   $symbols = str_replace( $cost, '', $_GET['cost']);  
-      //   // echo $cost.'--'; 
-      //   // echo $symbols; 
+      //   $symbols = str_replace( $cost, '', $_GET['cost']);
+      //   // echo $cost.'--';
+      //   // echo $symbols;
       //   // die();
       //   wp_send_json([
       //     'status'  =>  '200',
@@ -192,7 +219,7 @@ class GetProducts extends AbstractAjax
       // }
 
 
-     
+
 
   }
 }

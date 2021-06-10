@@ -35,15 +35,14 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
         if(isset($_GET['date_from']) || isset($_GET['date_to'])){
         $time_zone_client = $this->getTimeZone();
         $timezoneWPSetting = wp_timezone_string();
-
             if (strpos($timezoneWPSetting, '/') === false) {
                 $tz_offset = get_option('gmt_offset');
                 switch($tz_offset){
                     case -12: $timezoneWPSetting = 'Etc/GMT+12';break;
-                    case -11.5: $timezoneWPSetting = 'Etc/GMT+11.5';break;
+                    case -11.5: $timezoneWPSetting = 'Etc/GMT+11';break;
                     case -11: $timezoneWPSetting = 'Etc/GMT+11';break;
                     case 12.75: $timezoneWPSetting = 'Pacific/Chatham';break;
-                    case 13: $timezoneWPSetting = 'Pacific/Apia';break;
+                    case 13: $timezoneWPSetting = 'Pacific/Chatham';break;
                     case 13.75: $timezoneWPSetting = 'Pacific/Chatham';break;
                     case 14: $timezoneWPSetting = 'Pacific/Kiritimati';break;
                     default: $timezoneWPSetting = timezone_name_from_abbr("", $tz_offset * 3600, false);
@@ -62,7 +61,6 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
             AND ( meta_value BETWEEN '{$date_from}' AND '{$date_to}' )
             EOT;
             $objs = $wpdb->get_results( $query );
-
             foreach($objs as $obj){
                 $date = date_create($obj->meta_value, timezone_open($timezoneWPSetting));
                 date_timezone_set($date, timezone_open($time_zone_client));
@@ -72,6 +70,7 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
         }else{
             $objs = [];
         }
+
         $returnData = [];
 
         if(is_array($objs) && count($objs) > 0){
@@ -88,4 +87,4 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
 }
 
 
-// http://lec2.local/wp-admin/admin-ajax.php?action=get_live_course_dates&date_from=2021-05-24%2001:36:01&date_to=2021-06-17%2011:17:01
+// http://lec2.local/wp-admin/admin-ajax.php?action=get_products&date_from=2021-05-25&date_to=2021-06-17

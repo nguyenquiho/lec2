@@ -42,7 +42,7 @@ class ListLiveCourseDatesAjax extends AbstractListingAjax
                     case -11.5: $timezoneWPSetting = 'Etc/GMT+11';break;
                     case -11: $timezoneWPSetting = 'Etc/GMT+11';break;
                     case 12.75: $timezoneWPSetting = 'Pacific/Chatham';break;
-                    case 13: $timezoneWPSetting = 'Pacific/Chatham';break;
+                    case 13: $timezoneWPSetting = 'Pacific/Apia';break;
                     case 13.75: $timezoneWPSetting = 'Pacific/Chatham';break;
                     case 14: $timezoneWPSetting = 'Pacific/Kiritimati';break;
                     default: $timezoneWPSetting = timezone_name_from_abbr("", $tz_offset * 3600, false);
